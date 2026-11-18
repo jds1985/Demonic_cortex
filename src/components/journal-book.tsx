@@ -72,21 +72,6 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
   useEffect(() => {
     if (!open) return;
     bookRef.current?.focus();
-    const player = document.querySelector(".player");
-    if (!(player instanceof HTMLElement)) return;
-    const sync = () => {
-      const height = Math.ceil(player.getBoundingClientRect().height) + 12;
-      document.documentElement.style.setProperty("--player-clearance", `${height}px`);
-    };
-    sync();
-    const observer = new ResizeObserver(sync);
-    observer.observe(player);
-    window.addEventListener("resize", sync);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", sync);
-      document.documentElement.style.removeProperty("--player-clearance");
-    };
   }, [open]);
 
   function announce(nextIndex: number) {

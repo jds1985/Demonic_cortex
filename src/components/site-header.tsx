@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
+import { registerMenuOpener, SoundtrackMenu, useSoundtrackPlaying } from "./music-player";
 import { ReadingSettings } from "./reading-settings";
 
 const LINKS = [
@@ -70,9 +71,24 @@ function SiteMenu({ pathname }: { pathname: string }) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const panelId = useId();
+  const playing = useSoundtrackPlaying();
+  const openedFromSoundtrack = useRef(false);
+
+  useEffect(
+    () =>
+      registerMenuOpener(() => {
+        openedFromSoundtrack.current = true;
+        setOpen(true);
+      }),
+    [],
+  );
 
   useEffect(() => {
     if (!open) return;
+    if (openedFromSoundtrack.current) {
+      openedFromSoundtrack.current = false;
+      return;
+    }
     panelRef.current?.querySelector<HTMLElement>("a, button")?.focus();
 
     function onKey(event: KeyboardEvent) {
@@ -106,15 +122,15 @@ function SiteMenu({ pathname }: { pathname: string }) {
         ref={buttonRef}
         type="button"
         className="menu-button"
-        aria-label="Menu"
+        aria-label={playing ? "Menu, soundtrack playing" : "Menu"}
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
       >
         <HamburgerIcon />
+        {playing ? <span className="menu-playing" aria-hidden="true" /> : null}
       </button>
-      {open ? (
-        <nav ref={panelRef} id={panelId} className="menu-panel" aria-label="Primary">
+      <nav ref={panelRef} id={panelId} className="menu-panel" aria-label="Primary" hidden={!open}>
           <ul>
             {LINKS.map((link) => {
               const current = link.href === "/" ? pathname === "/" : pathname === link.href;
@@ -127,9 +143,9 @@ function SiteMenu({ pathname }: { pathname: string }) {
               );
             })}
           </ul>
+          <SoundtrackMenu />
           <ReadingSettings embedded />
-        </nav>
-      ) : null}
+      </nav>
     </div>
   );
 }

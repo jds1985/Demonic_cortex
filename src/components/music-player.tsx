@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { createContext, useContext, useEffect, useId, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 
 import type { Track } from "@/lib/media";
 import { VOLUME_KEY } from "@/lib/reading-prefs";
@@ -47,7 +47,48 @@ function commitVolume(next: number): void {
   for (const listener of volumeListeners) listener();
 }
 
-export function MusicPlayer({ tracks }: { tracks: Track[] }) {
+type SoundtrackValue = {
+  tracks: Track[];
+  track: Track | null;
+  playing: boolean;
+  status: string;
+  volume: number;
+  toggle: () => void;
+  changeTrack: (direction: number) => void;
+  setVolume: (value: number) => void;
+  requestOpen: () => void;
+};
+
+const SoundtrackContext = createContext<SoundtrackValue | null>(null);
+
+function useSoundtrack(): SoundtrackValue {
+  const value = useContext(SoundtrackContext);
+  if (!value) throw new Error("Soundtrack controls are outside the soundtrack provider.");
+  return value;
+}
+
+export function useSoundtrackPlaying(): boolean {
+  return useSoundtrack().playing;
+}
+
+let openMenu: (() => void) | null = null;
+let openPanel: (() => void) | null = null;
+
+export function registerMenuOpener(opener: () => void): () => void {
+  openMenu = opener;
+  return () => {
+    if (openMenu === opener) openMenu = null;
+  };
+}
+
+export function registerPanelOpener(opener: () => void): () => void {
+  openPanel = opener;
+  return () => {
+    if (openPanel === opener) openPanel = null;
+  };
+}
+
+export function SoundtrackProvider({ tracks, children }: { tracks: Track[]; children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const indexRef = useRef(0);
   const pendingPlayRef = useRef(false);
@@ -81,7 +122,8 @@ export function MusicPlayer({ tracks }: { tracks: Track[] }) {
 
   function toggle() {
     if (!track) {
-      setStatus("Soundtrack coming soon. There is no audio to play.");
+      setStatus("Soundtrack coming soon.");
+      setPlaying(false);
       return;
     }
     const audio = audioRef.current;
@@ -105,6 +147,7 @@ export function MusicPlayer({ tracks }: { tracks: Track[] }) {
   }
 
   function changeTrack(direction: number) {
+    if (tracks.length === 0) return;
     audioRef.current?.pause();
     pendingPlayRef.current = false;
     setPlaying(false);
@@ -122,46 +165,114 @@ export function MusicPlayer({ tracks }: { tracks: Track[] }) {
     setStatus("End of soundtrack.");
   }
 
-  const visibleStatus = tracks.length === 0 ? "Soundtrack coming soon." : status || track?.title || "";
+  return (
+    <SoundtrackContext.Provider
+      value={{
+        tracks,
+        track,
+        playing,
+        status,
+        volume,
+        toggle,
+        changeTrack,
+        setVolume: commitVolume,
+        requestOpen: () => {
+          openMenu?.();
+          openPanel?.();
+        },
+      }}
+    >
+      {children}
+      <audio
+        ref={audioRef}
+        className="soundtrack-audio"
+        src={track?.src}
+        preload="none"
+        onEnded={onEnded}
+      />
+    </SoundtrackContext.Provider>
+  );
+}
+
+export function SkipToSoundtrack() {
+  const { requestOpen } = useSoundtrack();
+  return (
+    <a
+      className="skip skip-audio"
+      href="#soundtrack"
+      onClick={(event) => {
+        event.preventDefault();
+        requestOpen();
+      }}
+    >
+      Skip to soundtrack
+    </a>
+  );
+}
+
+export function SoundtrackMenu() {
+  const soundtrack = useSoundtrack();
+  const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const panelId = useId();
+
+  useEffect(() => registerPanelOpener(() => setOpen(true)), []);
+
+  useEffect(() => {
+    if (!open) return;
+    panelRef.current?.querySelector<HTMLElement>("button")?.focus();
+  }, [open]);
+
+  const message = soundtrack.track ? soundtrack.track.title : "Soundtrack coming soon.";
 
   return (
-    <section id="soundtrack" className="player" aria-label="Soundtrack" tabIndex={-1}>
-      <div className="wrap player-inner">
-        <button type="button" className="play" onClick={toggle} aria-pressed={playing}>
-          <PlayIcon playing={playing} />
-          {playing ? "Pause" : "Play"}
-        </button>
-        <div className="player-copy">
-          <p className="player-name">Soundtrack</p>
-          <p className="player-status" aria-live="polite">
-            {visibleStatus}
+    <div className="soundtrack-menu">
+      <button
+        ref={buttonRef}
+        id="soundtrack"
+        type="button"
+        className="soundtrack-link"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((value) => !value)}
+      >
+        Soundtrack
+      </button>
+      {open ? (
+        <div ref={panelRef} id={panelId} className="soundtrack-panel" role="region" aria-label="Soundtrack">
+          <button type="button" className="play" onClick={soundtrack.toggle} aria-pressed={soundtrack.playing}>
+            <PlayIcon playing={soundtrack.playing} />
+            {soundtrack.playing ? "Pause" : "Play"}
+          </button>
+          <p className="soundtrack-now" aria-live="polite">
+            {message}
           </p>
+          {soundtrack.tracks.length > 1 ? (
+            <div className="track-switch" role="group" aria-label="Tracks">
+              <button type="button" onClick={() => soundtrack.changeTrack(-1)}>
+                Previous track
+              </button>
+              <button type="button" onClick={() => soundtrack.changeTrack(1)}>
+                Next track
+              </button>
+            </div>
+          ) : null}
+          <label className="volume" htmlFor="soundtrack-volume">
+            Volume
+            <input
+              id="soundtrack-volume"
+              type="range"
+              min={0}
+              max={100}
+              step={1}
+              value={Math.round(soundtrack.volume * 100)}
+              onChange={(event) => soundtrack.setVolume(Number(event.target.value) / 100)}
+            />
+          </label>
         </div>
-        {tracks.length > 1 ? (
-          <div className="track-switch" role="group" aria-label="Tracks">
-            <button type="button" onClick={() => changeTrack(-1)}>
-              Previous track
-            </button>
-            <button type="button" onClick={() => changeTrack(1)}>
-              Next track
-            </button>
-          </div>
-        ) : null}
-        <label className="volume" htmlFor="soundtrack-volume">
-          Volume
-          <input
-            id="soundtrack-volume"
-            type="range"
-            min={0}
-            max={100}
-            step={1}
-            value={Math.round(volume * 100)}
-            onChange={(event) => commitVolume(Number(event.target.value) / 100)}
-          />
-        </label>
-        {track ? <audio ref={audioRef} src={track.src} preload="none" onEnded={onEnded} /> : null}
-      </div>
-    </section>
+      ) : null}
+    </div>
   );
 }
 

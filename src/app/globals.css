@@ -25,7 +25,7 @@
 html {
   font-size: 100%;
   scroll-padding-top: 6rem;
-  scroll-padding-bottom: 12rem;
+  scroll-padding-bottom: 1.5rem;
 }
 
 body {
@@ -37,7 +37,7 @@ body {
   font-family: var(--font-ui), "Segoe UI", sans-serif;
   font-size: 1.125rem;
   line-height: 1.5;
-  padding-bottom: 16rem;
+  padding-bottom: 0;
 }
 
 img,
@@ -606,17 +606,6 @@ button:disabled {
   gap: 0.5rem 1rem;
 }
 
-.player {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 6;
-  background: #12090b;
-  border-top: 4px solid var(--gold);
-  box-shadow: 0 -6px 0 var(--crimson-deep);
-}
-
 .play {
   display: inline-flex;
   align-items: center;
@@ -916,6 +905,7 @@ button:disabled {
 }
 
 .menu-button {
+  position: relative;
   display: grid;
   place-items: center;
   width: 52px;
@@ -955,11 +945,17 @@ button:disabled {
   z-index: 8;
   top: calc(100% + 0.45rem);
   right: 0;
-  width: min(20rem, calc(100vw - 1.5rem));
+  width: min(20rem, calc(100dvw - 2.5rem));
+  max-height: calc(100dvh - 5rem);
+  overflow: auto;
   padding: 0.4rem 0.9rem 0.9rem;
   background: #12090a;
   border: 1px solid #6a3a22;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+}
+
+.menu-panel[hidden] {
+  display: none;
 }
 
 .menu-panel ul {
@@ -969,6 +965,7 @@ button:disabled {
   list-style: none;
 }
 
+.soundtrack-link,
 .menu-panel a {
   min-height: 3.25rem;
   font-family: var(--font-menu), Georgia, "Times New Roman", serif;
@@ -1016,8 +1013,7 @@ button:disabled {
 }
 
 .reading-controls,
-.site-header,
-.player {
+.site-header {
   position: relative;
 }
 
@@ -1025,13 +1021,91 @@ button:disabled {
   position: sticky;
 }
 
-.player {
-  position: fixed;
-  background: #080404;
-  border-top: 4px solid #5c3018;
-  box-shadow:
-    0 -10px 24px rgba(160, 30, 6, 0.35),
-    inset 0 0 0 1px #24110c;
+.soundtrack-audio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.soundtrack-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0.2rem 0;
+  background: transparent;
+  border: 0;
+  color: #f6efe6;
+  font-family: var(--font-menu), Georgia, "Times New Roman", serif;
+  font-size: clamp(1.7rem, 7vw, 2.15rem);
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+  text-shadow:
+    0 0 1px #ffc090,
+    0 0 7px rgba(190, 28, 12, 0.9);
+  cursor: pointer;
+}
+
+.soundtrack-panel {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0.15rem 0 0.45rem;
+  padding: 0.85rem;
+  background: #0c0708;
+  border: 1px solid #6a3a22;
+}
+
+.soundtrack-panel,
+.soundtrack-panel .play,
+.soundtrack-panel .volume,
+.soundtrack-now {
+  font-family: var(--font-ui), "Segoe UI", sans-serif;
+  text-shadow: none;
+}
+
+.soundtrack-panel .play {
+  width: 100%;
+  min-height: 52px;
+}
+
+.soundtrack-now {
+  margin: 0;
+  color: #f7f1e8;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.menu-playing {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffe7c2;
+  box-shadow: 0 0 0 2px #0c0708;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .menu-playing {
+    animation: menu-playing 1.3s ease-in-out infinite;
+  }
+}
+
+@keyframes menu-playing {
+  0%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.45;
+    transform: translateY(-2px);
+  }
 }
 
 .button {
@@ -1145,7 +1219,7 @@ nav a[aria-current="page"] {
 
 @media (min-width: 56rem) {
   body {
-    padding-bottom: 9rem;
+    padding-bottom: 0;
   }
 
   .splash {
@@ -1165,7 +1239,7 @@ nav a[aria-current="page"] {
   }
 
   body {
-    padding-bottom: 18rem;
+    padding-bottom: 0;
   }
 
   .button {
@@ -1360,7 +1434,7 @@ main {
   --journal-indigo: #2c3a4f;
   --journal-moss: #6e8f78;
   --journal-silver: #d5dbe2;
-  padding-bottom: 8rem;
+  padding-bottom: 2rem;
 }
 
 .journal h1 {
@@ -1513,28 +1587,6 @@ main {
   color: #f7f1e8;
   font-size: 1.25rem;
   font-weight: 700;
-}
-
-@media (max-width: 40rem) {
-  .journal-dock {
-    position: fixed;
-    z-index: 7;
-    left: 0;
-    right: 0;
-    bottom: var(--player-clearance, 16rem);
-    margin: 0;
-    padding: 0.45rem 1rem 0.65rem;
-    background: #050303;
-  }
-
-  .journal-is-open {
-    padding-bottom: 14rem;
-  }
-
-  .journal-is-open .sketch-page {
-    max-height: min(16rem, calc(100svh - 30rem));
-    overflow: auto;
-  }
 }
 
 .journal-nav {

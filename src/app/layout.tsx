@@ -4,7 +4,7 @@ import Script from "next/script";
 import { Suspense } from "react";
 
 import { Atmosphere } from "@/components/atmosphere";
-import { MusicPlayer } from "@/components/music-player";
+import { SkipToSoundtrack, SoundtrackProvider } from "@/components/music-player";
 import { ReadingPrefsSync } from "@/components/reading-prefs-sync";
 import { HeaderBar, SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -95,22 +95,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         <ReadingPrefsSync />
         <Atmosphere />
-        <div className="site-shell">
-          <a className="skip" href="#main">
-            Skip to content
-          </a>
-          <a className="skip skip-audio" href="#soundtrack">
-            Skip to soundtrack
-          </a>
-          <Suspense fallback={<HeaderBar pathname="" />}>
-            <SiteHeader />
-          </Suspense>
-          <main id="main" tabIndex={-1}>
-            {children}
-          </main>
-          <SiteFooter />
-        </div>
-        <MusicPlayer tracks={tracks} />
+        <SoundtrackProvider tracks={tracks}>
+          <div className="site-shell">
+            <a className="skip" href="#main">
+              Skip to content
+            </a>
+            <SkipToSoundtrack />
+            <Suspense fallback={<HeaderBar pathname="" />}>
+              <SiteHeader />
+            </Suspense>
+            <main id="main" tabIndex={-1}>
+              {children}
+            </main>
+            <SiteFooter />
+          </div>
+        </SoundtrackProvider>
       </body>
     </html>
   );

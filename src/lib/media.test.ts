@@ -18,6 +18,23 @@ describe("soundtrack and trailers", () => {
       tracks.map((track) => track.src),
       ["/audio/opening.mp3", "https://cdn.example.com/theme.mp3"],
     );
+    assert.deepEqual(
+      tracks.map((track) => track.downloadableForSubscribers),
+      [false, false],
+    );
+  });
+
+  it("keeps a subscriber-download flag without offering a download", () => {
+    const tracks = visibleTracks([
+      { title: "Preview", src: "/audio/preview.mp3", downloadableForSubscribers: false },
+      { title: "Full", src: "/audio/full.mp3", downloadableForSubscribers: true },
+      { title: "Unset", src: "/audio/unset.mp3" },
+      { title: "Bad flag", src: "/audio/bad.mp3", downloadableForSubscribers: "yes" },
+    ]);
+    assert.deepEqual(
+      tracks.map((track) => track.downloadableForSubscribers),
+      [false, true, false, false],
+    );
   });
 
   it("accepts only 11-character YouTube ids", () => {
