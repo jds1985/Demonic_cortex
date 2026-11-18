@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
 import type { JournalPage } from "@/lib/journal";
+import { nextJournalIndex } from "@/lib/journal-nav";
 import type { JournalKind } from "../../content/journal";
 
 const KIND: Record<JournalKind, string> = {
@@ -84,6 +85,7 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
     setTurn(null);
     pendingIndex.current = null;
     setLive("Journal closed.");
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
     coverRef.current?.focus();
   }
 
@@ -98,14 +100,17 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
 
   function turnBy(delta: number) {
     if (turn) return;
-    const nextIndex = Math.max(0, Math.min(index + delta, Math.max(0, total - step)));
-    const aligned = spread ? nextIndex - (nextIndex % step) : nextIndex;
-    if (aligned === index) return;
-    if (prefersReducedMotion()) {
-      commit(aligned);
+    const target = nextJournalIndex(index, delta, total, step);
+    if (target === "close") {
+      closeBook();
       return;
     }
-    pendingIndex.current = aligned;
+    if (target === index) return;
+    if (prefersReducedMotion()) {
+      commit(target);
+      return;
+    }
+    pendingIndex.current = target;
     setTurn(delta > 0 ? "next" : "back");
   }
 
@@ -205,7 +210,6 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
               className="page-edge page-edge-back"
               tabIndex={-1}
               aria-hidden="true"
-              disabled={atStart}
               onClick={() => turnBy(-step)}
             />
             <button
@@ -289,7 +293,12 @@ function FlipBar({
     <div className={compact ? "journal-dock journal-dock-top" : "journal-dock"}>
       <p className="journal-count">{countLabel}</p>
       <div className="journal-nav">
-        <button type="button" className="journal-button" onClick={onBack} disabled={atStart}>
+        <button
+          type="button"
+          className="journal-button"
+          onClick={onBack}
+          aria-label={atStart ? "Back to cover" : "Back"}
+        >
           {compact ? <span aria-hidden="true">← </span> : null}
           Back
         </button>

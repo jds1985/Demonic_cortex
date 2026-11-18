@@ -6,6 +6,7 @@ import { afterEach, describe, it } from "node:test";
 
 import { journalEntries } from "../../content/journal";
 import { canReadBody } from "./catalog";
+import { nextJournalIndex } from "./journal-nav";
 import { accessByOrder, journalAccess, loadJournalPages, parseJournalJson, presentJournal, releaseJournal } from "./journal";
 
 const ORIGINAL_SOURCE = process.env.PRIVATE_JOURNAL_SOURCE;
@@ -29,6 +30,15 @@ describe("journal catalog", () => {
     assert.equal(canReadBody("locked", false), false);
     assert.equal(canReadBody("locked", true), true);
     assert.equal(canReadBody("free", false), true);
+  });
+
+  it("returns to the cover when going back from the first page", () => {
+    assert.equal(nextJournalIndex(0, -1, 3, 1), "close");
+    assert.equal(nextJournalIndex(0, -2, 3, 2), "close");
+    assert.equal(nextJournalIndex(1, -1, 3, 1), 0);
+    assert.equal(nextJournalIndex(2, -2, 3, 2), 0);
+    assert.equal(nextJournalIndex(0, 1, 3, 1), 1);
+    assert.equal(nextJournalIndex(2, 1, 3, 1), 2);
   });
 
   it("uses the chapter ladder of free, then locked, then upcoming", () => {
