@@ -1221,4 +1221,130 @@ nav a[aria-current="page"] {
   .ink-sky {
     display: none;
   }
+
+  .gate-arch {
+    border: 2px solid CanvasText;
+  }
+}
+
+.site-header {
+  position: relative;
+  z-index: auto;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.gate-arch {
+  width: 100%;
+  height: 16rem;
+  pointer-events: none;
+}
+
+.gate-arch svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.site-header-home {
+  margin-bottom: -4.5rem;
+}
+
+.site-header-inner .gate-arch {
+  height: 9.25rem;
+}
+
+.site-header-inner {
+  margin-bottom: -1.15rem;
+}
+
+.gate-title {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 3.5rem;
+  width: min(92%, 40rem);
+  margin: 0;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.site-header-inner .gate-title {
+  top: 2.7rem;
+  width: min(72%, 28rem);
+}
+
+.gate-title picture,
+.gate-title img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.site-menu {
+  position: fixed;
+  top: 0.65rem;
+  right: 0.65rem;
+  z-index: 30;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.splash {
+  margin-top: 0;
+}
+
+@media (max-width: 40rem) {
+  .site-header-home .gate-arch {
+    height: 17.5rem;
+  }
+
+  .site-header-home {
+    margin-bottom: -6rem;
+  }
+
+  .gate-title,
+  .site-header-inner .gate-title {
+    top: 4.6rem;
+    width: min(94%, 40rem);
+  }
+
+  .site-header-inner .gate-arch {
+    height: 10.25rem;
+  }
+
+  .site-header-inner {
+    margin-bottom: -1.5rem;
+  }
+}
+
+@media (min-width: 56rem) {
+  .site-header-home .gate-arch {
+    height: 17.5rem;
+  }
+
+  .site-header-home {
+    margin-bottom: -3.5rem;
+  }
+
+  .gate-title {
+    top: 3.2rem;
+    width: min(68%, 42rem);
+  }
+}
+
+@media (max-width: 30rem) {
+  .gate-arch {
+    height: 12.25rem;
+  }
+
+  .site-header-inner .gate-arch {
+    height: 8.25rem;
+  }
 }
