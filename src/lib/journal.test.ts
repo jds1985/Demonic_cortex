@@ -51,7 +51,7 @@ describe("journal catalog", () => {
       ["free", "upcoming", "upcoming"],
     );
     const entry = pages[0];
-    assert.equal(entry?.image, "/art/journal/entry-one-1152.jpg");
+    assert.equal(entry?.image, "/art/journal/entry-one-960.png");
     assert.equal(
       entry?.imageAlt,
       "Rayne's pencil sketch of a white two-story bed and breakfast on a grassy hill above a rocky ocean coast.",

@@ -260,12 +260,12 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
   );
 }
 
-const SKETCH_WIDTHS = [480, 768, 1152] as const;
+const SKETCH_WIDTHS = [640, 960] as const;
 
-function sketchSrcSet(src: string, extension: "jpg" | "webp"): string | undefined {
-  const match = src.match(/^(.*)-1152\.jpe?g$/i);
+function sketchSrcSet(src: string): string | undefined {
+  const match = src.match(/^(.*)-960\.png$/i);
   if (!match) return undefined;
-  return SKETCH_WIDTHS.map((width) => `${match[1]}-${width}.${extension} ${width}w`).join(", ");
+  return SKETCH_WIDTHS.map((width) => `${match[1]}-${width}.png ${width}w`).join(", ");
 }
 
 function FlipBar({
@@ -309,32 +309,30 @@ function FlipBar({
 
 function SketchSheet({ page }: { page: JournalPage }) {
   const open = page.paragraphs !== null;
-  const label = open ? page.title : closedLabel(page);
-  const webp = page.image ? sketchSrcSet(page.image, "webp") : undefined;
-  const jpeg = page.image ? sketchSrcSet(page.image, "jpg") : undefined;
+  const label = closedLabel(page);
+  const sketchSet = page.image ? sketchSrcSet(page.image) : undefined;
 
   return (
-    <article className={open ? "sketch-page sketch-page-open" : "sketch-page sketch-page-closed"}>
+    <article
+      className={open ? "sketch-page sketch-page-open" : "sketch-page sketch-page-closed"}
+      aria-label={open ? page.title : undefined}
+    >
       {open ? null : <span className="sketch-tape" aria-hidden="true" />}
       <span className="sketch-stitch" aria-hidden="true" />
       {open && page.image ? (
         <figure className="entry-sketch">
-          <span className="entry-tape entry-tape-tl" aria-hidden="true" />
-          <span className="entry-tape entry-tape-br" aria-hidden="true" />
-          <picture>
-            {webp ? <source type="image/webp" srcSet={webp} sizes="(min-width: 56rem) 22rem, calc(100vw - 6rem)" /> : null}
-            <img
-              src={page.image}
-              srcSet={jpeg}
-              sizes="(min-width: 56rem) 22rem, calc(100vw - 6rem)"
-              alt={page.imageAlt ?? page.title}
-              width={1152}
-              height={864}
-            />
-          </picture>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={page.image}
+            srcSet={sketchSet}
+            sizes="(min-width: 56rem) 28rem, calc(100vw - 5rem)"
+            alt={page.imageAlt ?? ""}
+            width={960}
+            height={720}
+          />
         </figure>
       ) : null}
-      <h2 className={open ? "entry-heading" : undefined}>{label}</h2>
+      {open ? null : <h2>{label}</h2>}
       {open ? null : <p className="sketch-kind">{KIND[page.type]}</p>}
       {open ? (
         <div className="entry-copy">

@@ -44,7 +44,7 @@ export const journalEntries: JournalEntry[] = [
     title: "Entry One",
     unlockOrder: 1,
     type: "mixed",
-    image: "/art/journal/entry-one-1152.jpg",
+    image: "/art/journal/entry-one-960.png",
     imageAlt: ENTRY_ONE_ALT,
     blocks: entryOneBlocks(),
   },

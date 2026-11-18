@@ -1639,10 +1639,11 @@ main {
 }
 
 .entry-sketch {
-  position: relative;
-  width: min(92%, 24rem);
-  margin: 0.6rem auto 1.35rem;
-  transform: rotate(-2.2deg);
+  width: min(100%, 28rem);
+  margin: 0.15rem auto 0.35rem;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .entry-sketch img {
@@ -1650,30 +1651,11 @@ main {
   width: 100%;
   height: auto;
   margin: 0;
-  background: #f7f4ee;
-  border: 1px solid rgba(70, 48, 24, 0.18);
-  box-shadow: 0 0.55rem 1.15rem rgba(48, 32, 16, 0.28);
-}
-
-.entry-tape {
-  position: absolute;
-  z-index: 1;
-  width: 4.4rem;
-  height: 1.15rem;
-  background: rgba(232, 216, 180, 0.9);
-  box-shadow: 0 1px 2px rgba(40, 28, 12, 0.18);
-}
-
-.entry-tape-tl {
-  top: -0.35rem;
-  left: -0.2rem;
-  transform: rotate(-16deg);
-}
-
-.entry-tape-br {
-  right: -0.15rem;
-  bottom: -0.25rem;
-  transform: rotate(14deg);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  mix-blend-mode: multiply;
 }
 
 .sketch-page-open .entry-heading,
