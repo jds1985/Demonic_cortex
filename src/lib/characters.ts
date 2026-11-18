@@ -47,7 +47,7 @@ export const characters: Character[] = [
     name: "Duke",
     role: "Guides Rayne toward the soul key and the demonic cortex.",
     description: "Description coming soon.",
-    image: null,
+    image: "/art/duke.jpg",
     alt: "Duke",
   },
 ];

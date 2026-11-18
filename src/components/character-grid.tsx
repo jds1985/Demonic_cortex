@@ -10,7 +10,7 @@ export function CharacterGrid({ heading = "Characters", level = "h2" }: { headin
     <section className="block" id="characters" aria-labelledby="characters-heading">
       <Heading id="characters-heading">{heading}</Heading>
       <p className="prose">
-        Rayne, Heaven, and Lou are shown here. Duke is still an empty frame.
+        Rayne, Heaven, Lou, and Duke.
       </p>
       <ul className="card-grid">
         {characters.map((character) => {
