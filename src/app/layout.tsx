@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Grenze_Gotisch, Literata, Source_Sans_3 } from "next/font/google";
+import { Grenze_Gotisch, Literata, Source_Sans_3, UnifrakturMaguntia } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
 
@@ -33,6 +33,13 @@ const ui = Source_Sans_3({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   variable: "--font-ui",
+  display: "swap",
+});
+
+const menuFace = UnifrakturMaguntia({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-menu",
   display: "swap",
 });
 
@@ -81,7 +88,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${reading.variable} ${ui.variable}`}>
+    <html lang="en" className={`${display.variable} ${reading.variable} ${ui.variable} ${menuFace.variable}`}>
       <body>
         <Script id="reading-prefs" strategy="beforeInteractive">
           {readingPrefsBootstrapScript()}

@@ -969,8 +969,24 @@ button:disabled {
 }
 
 .menu-panel a {
-  min-height: 3rem;
-  font-size: 1.25rem;
+  min-height: 3.25rem;
+  font-family: var(--font-menu), Georgia, "Times New Roman", serif;
+  font-size: clamp(1.7rem, 7vw, 2.15rem);
+  line-height: 1.25;
+  color: #f6efe6;
+  text-shadow:
+    0 0 1px #ffc090,
+    0 0 7px rgba(190, 28, 12, 0.9);
+}
+
+.menu-panel .reading-settings-link,
+.menu-panel .reading-settings-close,
+.menu-panel .reading-controls,
+.menu-panel .reading-controls button {
+  font-family: var(--font-ui), "Segoe UI", sans-serif;
+  text-shadow: none;
+  font-size: 1.125rem;
+  line-height: 1.4;
 }
 
 .menu-panel .reading-settings {
@@ -1065,6 +1081,18 @@ a.button-secondary:visited {
 .caption-bar {
   background: #0c0708;
   border-top: 3px solid #5c3018;
+}
+
+.cover-title {
+  margin: 0.1rem 0 0.8rem;
+}
+
+.cover-title picture,
+.cover-title img {
+  display: block;
+  width: min(100%, 36rem);
+  max-width: 100%;
+  height: auto;
 }
 
 .hell-title {

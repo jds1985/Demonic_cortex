@@ -15,11 +15,14 @@ export default function HomePage() {
       <section className="splash" aria-labelledby="hero-title">
         <div className="panel splash-copy">
           <p className="kicker">A graphic novel in progress</p>
-          <h1 id="hero-title" className="hell-title">
-            <span className="hell-haze" aria-hidden="true">
+          <h1 id="hero-title" className="cover-title">
+            <span className="visually-hidden" aria-hidden="true">
               Demonic Cortex
             </span>
-            <span className="hell-letters">Demonic Cortex</span>
+            <picture>
+              <source srcSet="/art/title.webp" type="image/webp" />
+              <img src="/art/title.png" alt="Demonic Cortex" width={813} height={140} />
+            </picture>
           </h1>
           <p className="byline">by Jim</p>
           <div className="actions">

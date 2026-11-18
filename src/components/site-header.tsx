@@ -78,7 +78,7 @@ function SiteMenu({ pathname }: { pathname: string }) {
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
       >
-        <DcMonogram />
+        <HamburgerIcon />
       </button>
       {open ? (
         <nav ref={panelRef} id={panelId} className="menu-panel" aria-label="Primary">
@@ -101,27 +101,10 @@ function SiteMenu({ pathname }: { pathname: string }) {
   );
 }
 
-function DcMonogram() {
+function HamburgerIcon() {
   return (
-        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-      <path d="M18 20c2-12 0-16-8-20 8 2 14 10 12 20" fill="none" stroke="#ff6a2a" strokeWidth="2.2" />
-      <path d="M46 20c-2-12 0-16 8-20-8 2-14 10-12 20" fill="none" stroke="#ff6a2a" strokeWidth="2.2" />
-      <path
-        d="M14 18v28M14 18h10c11 0 16 6 16 14s-5 14-16 14H14"
-        fill="none"
-        stroke="#f6efe6"
-        strokeWidth="4"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M28 24h8c9 0 14 4.5 14 10s-5 10-14 10H22"
-        fill="none"
-        stroke="#ffb070"
-        strokeWidth="3.4"
-        strokeLinecap="round"
-      />
-      <ellipse cx="24" cy="54" rx="6" ry="3" fill="none" stroke="#c6a15a" strokeWidth="1.7" />
-      <ellipse cx="34" cy="54" rx="6" ry="3" fill="none" stroke="#c6a15a" strokeWidth="1.7" />
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
     </svg>
   );
 }
