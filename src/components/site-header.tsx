@@ -21,9 +21,10 @@ export function HeaderBar({ pathname }: { pathname: string }) {
       <div className="wrap header-inner">
         <Link className="brand" href="/">
           <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-            <rect x="2" y="2" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" />
-            <rect x="6" y="16" width="20" height="6" fill="#6e1420" />
-            <circle cx="21" cy="11" r="3" fill="#c4473a" />
+            <circle cx="16" cy="18" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="M10 12c2-7 1-9-2-11 4 1 7 5 6 10" fill="none" stroke="#ff6a2a" strokeWidth="2" />
+            <path d="M22 12c-2-7-1-9 2-11-4 1-7 5-6 10" fill="none" stroke="#ff6a2a" strokeWidth="2" />
+            <path d="M8 24h16" stroke="#8a5a32" strokeWidth="2" />
           </svg>
           <span>Demonic Cortex</span>
         </Link>

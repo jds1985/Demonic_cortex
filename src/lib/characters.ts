@@ -6,6 +6,7 @@ export interface Character {
   role: string;
   description: string;
   image: string | null;
+  alt: string;
 }
 
 const ART_PATH = /^\/art\/[\w.-]+\.(png|jpe?g|webp|gif|avif)$/i;
@@ -22,21 +23,24 @@ export const characters: Character[] = [
     name: "Rayne",
     role: "The mother and narrator",
     description: "Description coming soon.",
-    image: null,
+    image: "/art/rayne.jpg",
+    alt: "Rayne",
   },
   {
     id: "heaven",
     name: "Heaven",
     role: "Rayne's daughter",
     description: "Description coming soon.",
-    image: null,
+    image: "/art/heaven.jpg",
+    alt: "Heaven",
   },
   {
     id: "lou",
     name: "Lou",
     role: "Rayne's husband. He was not who he seemed.",
     description: "Description coming soon.",
-    image: null,
+    image: "/art/lou.jpg",
+    alt: "Lou",
   },
   {
     id: "duke",
@@ -44,6 +48,7 @@ export const characters: Character[] = [
     role: "Guides Rayne toward the soul key and the demonic cortex.",
     description: "Description coming soon.",
     image: null,
+    alt: "Duke",
   },
 ];
 

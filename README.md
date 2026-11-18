@@ -136,9 +136,9 @@ There are no accounts yet, so `src/lib/access.ts` always reports that the visito
 
 ## Character art
 
-Portrait frames for Rayne, Heaven, Lou, and Duke are on the home page and on `/characters`. They are empty on purpose.
+Portrait frames for Rayne, Heaven, Lou, and Duke are on the home page and on `/characters`. Rayne, Heaven, and Lou use the approved art in `public/art/`. Duke’s frame stays empty until his portrait is ready.
 
-When a portrait is ready, add a raster file under `public/art/` and set `image` in `src/lib/characters.ts` to a path like `"/art/rayne.webp"`. Only `/art/` files are shown. Keep descriptions short and free of plot surprises. The intended style is bold ink, cel-shaded, on a crimson and black sky.
+To add or replace a portrait, put a raster file under `public/art/` and set `image` in `src/lib/characters.ts` to a path like `"/art/duke.webp"`. Only `/art/` files are shown. Set `alt` to the character’s name. Keep descriptions short and free of plot surprises.
 
 ## Subscriptions
 

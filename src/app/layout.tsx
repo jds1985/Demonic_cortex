@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Literata, Source_Sans_3 } from "next/font/google";
+import { Grenze_Gotisch, Literata, Source_Sans_3 } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
 
@@ -15,9 +15,9 @@ import { readingPrefsBootstrapScript } from "@/lib/reading-prefs";
 import soundtrackFile from "../../content/soundtrack.json";
 import "./globals.css";
 
-const display = Fraunces({
+const display = Grenze_Gotisch({
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["500", "700"],
   variable: "--font-display",
   display: "swap",
 });
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0708",
+  themeColor: "#050303",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,

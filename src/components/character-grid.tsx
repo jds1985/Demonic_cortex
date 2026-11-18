@@ -10,8 +10,7 @@ export function CharacterGrid({ heading = "Characters", level = "h2" }: { headin
     <section className="block" id="characters" aria-labelledby="characters-heading">
       <Heading id="characters-heading">{heading}</Heading>
       <p className="prose">
-        Portraits will be bold ink and cel-shaded, set on crimson and black skies. The frames below are empty on
-        purpose.
+        Rayne, Heaven, and Lou are shown here. Duke is still an empty frame.
       </p>
       <ul className="card-grid">
         {characters.map((character) => {
@@ -22,7 +21,7 @@ export function CharacterGrid({ heading = "Characters", level = "h2" }: { headin
                 {image ? (
                   // Character files are local public art added later. Zoom is for story pages.
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={image} alt={`Portrait of ${character.name}`} />
+                  <img src={image} alt={character.alt} />
                 ) : (
                   <InkSky />
                 )}
