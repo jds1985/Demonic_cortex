@@ -41,6 +41,7 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
   const [live, setLive] = useState("");
   const coverRef = useRef<HTMLButtonElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
+  const sheetTopRef = useRef<HTMLDivElement>(null);
   const pendingIndex = useRef<number | null>(null);
   const turnByRef = useRef<(delta: number) => void>(() => {});
   const closeRef = useRef<() => void>(() => {});
@@ -61,7 +62,11 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
   useEffect(() => {
     if (!open) return;
     bookRef.current?.focus();
-  }, [open]);
+    sheetTopRef.current?.scrollIntoView({
+      block: "start",
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+    });
+  }, [open, index]);
 
   function announce(nextIndex: number) {
     setLive(pageStatus(pages, nextIndex, step));
@@ -148,9 +153,18 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
 
   return (
     <div className={open ? "wrap journal journal-is-open" : "wrap journal"}>
-      <h1>Rayne&apos;s Journal</h1>
+      <h1 className={open ? "visually-hidden" : undefined}>Rayne&apos;s Journal</h1>
       {open && left ? (
         <>
+          <div ref={sheetTopRef} className="journal-sheet-top">
+            <FlipBar
+              countLabel={countLabel}
+              atStart={atStart}
+              atEnd={atEnd}
+              compact
+              onBack={() => turnBy(-step)}
+              onNext={() => turnBy(step)}
+            />
           <div
             ref={bookRef}
             className={spread ? "book-scene is-spread" : "book-scene"}
@@ -203,20 +217,15 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
               onClick={() => turnBy(step)}
             />
           </div>
-          <div className="journal-dock">
-            <p className="journal-count">{countLabel}</p>
-            <div className="journal-nav">
-              <button type="button" className="journal-button" onClick={() => turnBy(-step)} disabled={atStart}>
-                Back
-              </button>
-              <button type="button" className="journal-button" onClick={() => turnBy(step)} disabled={atEnd}>
-                Next
-              </button>
-            </div>
-            <button type="button" className="journal-button journal-close" onClick={closeBook}>
-              Close journal
-            </button>
           </div>
+          <FlipBar
+            countLabel={countLabel}
+            atStart={atStart}
+            atEnd={atEnd}
+            onBack={() => turnBy(-step)}
+            onNext={() => turnBy(step)}
+            onClose={closeBook}
+          />
           <p id={liveId} className="visually-hidden" aria-live="polite">
             {live}
           </p>
@@ -257,6 +266,45 @@ function sketchSrcSet(src: string, extension: "jpg" | "webp"): string | undefine
   const match = src.match(/^(.*)-1152\.jpe?g$/i);
   if (!match) return undefined;
   return SKETCH_WIDTHS.map((width) => `${match[1]}-${width}.${extension} ${width}w`).join(", ");
+}
+
+function FlipBar({
+  countLabel,
+  atStart,
+  atEnd,
+  compact = false,
+  onBack,
+  onNext,
+  onClose,
+}: {
+  countLabel: string;
+  atStart: boolean;
+  atEnd: boolean;
+  compact?: boolean;
+  onBack: () => void;
+  onNext: () => void;
+  onClose?: () => void;
+}) {
+  return (
+    <div className={compact ? "journal-dock journal-dock-top" : "journal-dock"}>
+      <p className="journal-count">{countLabel}</p>
+      <div className="journal-nav">
+        <button type="button" className="journal-button" onClick={onBack} disabled={atStart}>
+          {compact ? <span aria-hidden="true">← </span> : null}
+          Back
+        </button>
+        <button type="button" className="journal-button" onClick={onNext} disabled={atEnd}>
+          Next
+          {compact ? <span aria-hidden="true"> →</span> : null}
+        </button>
+      </div>
+      {onClose ? (
+        <button type="button" className="journal-button journal-close" onClick={onClose}>
+          Close journal
+        </button>
+      ) : null}
+    </div>
+  );
 }
 
 function SketchSheet({ page }: { page: JournalPage }) {

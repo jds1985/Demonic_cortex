@@ -1501,6 +1501,10 @@ main {
   width: min(100%, 22rem);
 }
 
+.journal-is-open .book-scene {
+  margin-top: 0.2rem;
+}
+
 .book-scene {
   position: relative;
   max-width: 100%;
@@ -1603,14 +1607,30 @@ main {
   margin-top: 0.75rem;
 }
 
-.journal-is-open .sketch-page {
-  min-height: 11rem;
+.journal-is-open {
+  margin-top: -1.75rem;
 }
 
-.journal-is-open .sketch-page-open {
-  max-height: calc(100svh - 28rem);
-  overflow: auto;
-  overscroll-behavior: contain;
+.journal-sheet-top {
+  scroll-margin-top: 0.5rem;
+}
+
+.journal-dock-top {
+  margin-bottom: 0.35rem;
+}
+
+.journal-dock-top .journal-count {
+  margin-top: 0;
+}
+
+.sketch-page-closed {
+  min-height: 70vh;
+}
+
+.sketch-page-open {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
   clip-path: none;
 }
 
@@ -1681,15 +1701,10 @@ main {
   white-space: pre-line;
 }
 
-@media (min-width: 56rem) {
-  .journal-is-open .sketch-page-open {
-    max-height: calc(100svh - 34rem);
-  }
-}
 
 .sketch-page {
   position: relative;
-  min-height: 16rem;
+  min-height: 70vh;
   margin: 0;
   padding: 3.1rem 1.15rem 1.35rem 1.45rem;
   overflow: hidden;
@@ -1716,6 +1731,11 @@ main {
     22% 98.6%,
     0 100%
   );
+}
+
+.sketch-page.sketch-page-open {
+  overflow: visible;
+  height: auto;
 }
 
 .sketch-page h2 {
