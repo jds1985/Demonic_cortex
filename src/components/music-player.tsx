@@ -194,6 +194,15 @@ export function SoundtrackProvider({ tracks, children }: { tracks: Track[]; chil
   );
 }
 
+export function OpenSoundtrack() {
+  const { requestOpen } = useSoundtrack();
+  return (
+    <button type="button" className="button" onClick={() => requestOpen()}>
+      Soundtrack
+    </button>
+  );
+}
+
 export function SkipToSoundtrack() {
   const { requestOpen } = useSoundtrack();
   return (

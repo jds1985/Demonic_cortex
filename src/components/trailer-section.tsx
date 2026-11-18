@@ -1,11 +1,18 @@
 import { visibleTrailers, type Trailer } from "@/lib/media";
 
-export function TrailerSection({ videos }: { videos: Trailer[] | unknown }) {
+export function TrailerSection({
+  videos,
+  level = "h2",
+}: {
+  videos: Trailer[] | unknown;
+  level?: "h1" | "h2";
+}) {
   const ready = visibleTrailers(videos);
+  const Heading = level;
 
   return (
     <section className="block" aria-labelledby="trailers-heading">
-      <h2 id="trailers-heading">Trailers</h2>
+      <Heading id="trailers-heading">Trailers</Heading>
       <p className="prose">YouTube trailers will appear in these panels.</p>
       <ul className="trailer-grid">
         {ready.length === 0

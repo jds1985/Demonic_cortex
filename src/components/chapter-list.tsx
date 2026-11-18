@@ -8,12 +8,14 @@ const STATUS: Record<ChapterAccess, string> = {
   upcoming: "Coming soon",
 };
 
-export function ChapterList() {
+export function ChapterList({ level = "h2" }: { level?: "h1" | "h2" }) {
   const chapters = listChapters();
+  const Heading = level;
+  const Title = level === "h1" ? "h2" : "h3";
 
   return (
     <section className="block" id="chapters" aria-labelledby="chapters-heading">
-      <h2 id="chapters-heading">Chapters</h2>
+      <Heading id="chapters-heading">Chapters</Heading>
       <p className="prose">
         Thirteen chapters are planned. Chapter 1 is free. Chapters 2 through 7 open with a subscription.
         Chapters 8 through 13 are still to come.
@@ -21,9 +23,9 @@ export function ChapterList() {
       <ol className="chapter-list">
         {chapters.map((chapter) => (
           <li key={chapter.number} className="panel chapter-row">
-            <h3>
+            <Title>
               <Link href={`/read/${chapter.number}`}>{chapter.title}</Link>
-            </h3>
+            </Title>
             <p className={`status status-${chapter.access}`}>{STATUS[chapter.access]}</p>
             {chapter.access === "free" ? (
               <Link className="button" href={`/read/${chapter.number}`}>

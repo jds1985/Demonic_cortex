@@ -9,7 +9,7 @@ import { ReadingSettings } from "./reading-settings";
 
 const LINKS = [
   { href: "/", label: "Home" },
-  { href: "/#chapters", label: "Chapters" },
+  { href: "/chapters", label: "Chapters" },
   { href: "/journal", label: "Rayne's Journal" },
   { href: "/characters", label: "Characters" },
   { href: "/subscribe", label: "Subscribe" },

@@ -12,7 +12,16 @@ export function SiteFooter() {
               <Link href="/">Home</Link>
             </li>
             <li>
+              <Link href="/chapters">Chapters</Link>
+            </li>
+            <li>
               <Link href="/characters">Characters</Link>
+            </li>
+            <li>
+              <Link href="/journal">Rayne&apos;s Journal</Link>
+            </li>
+            <li>
+              <Link href="/trailers">Trailers</Link>
             </li>
             <li>
               <Link href="/subscribe">Subscribe</Link>
