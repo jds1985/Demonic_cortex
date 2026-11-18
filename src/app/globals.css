@@ -31,6 +31,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: clip;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-ui), "Segoe UI", sans-serif;
@@ -917,15 +918,15 @@ button:disabled {
 .menu-button {
   display: grid;
   place-items: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  min-width: 3.25rem;
-  min-height: 3.25rem;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  min-height: 52px;
   padding: 0.3rem;
-  background: #12090a;
-  color: #f6efe6;
+  background: #0c0708;
+  color: #fff8f2;
   border: 2px solid #ff6a2a;
-  box-shadow: 0 0 14px rgba(255, 90, 20, 0.35);
+  box-shadow: 0 0 0 2px #0c0708, 0 0 14px rgba(255, 90, 20, 0.45);
   cursor: pointer;
 }
 
@@ -1222,73 +1223,72 @@ nav a[aria-current="page"] {
     display: none;
   }
 
-  .gate-arch {
-    border: 2px solid CanvasText;
-  }
 }
 
 .site-header {
   position: relative;
   z-index: auto;
-  background: transparent;
+  width: 100%;
+  max-width: 100%;
+  background: var(--bg);
   border: 0;
   box-shadow: none;
   padding: 0;
 }
 
-.gate-arch {
-  width: 100%;
-  height: 16rem;
-  pointer-events: none;
-}
-
-.gate-arch svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.site-header-home {
-  margin-bottom: -4.5rem;
-}
-
-.site-header-inner .gate-arch {
-  height: 9.25rem;
-}
-
-.site-header-inner {
-  margin-bottom: -1.15rem;
-}
-
-.gate-title {
+.site-header::after {
+  content: "";
   position: absolute;
   z-index: 1;
-  left: 50%;
-  top: 3.5rem;
-  width: min(92%, 40rem);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6.5rem;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(5, 3, 3, 0), var(--bg) 82%);
+}
+
+.gate-home,
+.gate-art {
+  display: block;
+  width: 100%;
   margin: 0;
-  transform: translateX(-50%);
-  text-align: center;
 }
 
-.site-header-inner .gate-title {
-  top: 2.7rem;
-  width: min(72%, 28rem);
-}
-
-.gate-title picture,
-.gate-title img {
+.gate-art img {
   display: block;
   width: 100%;
   max-width: 100%;
-  height: auto;
+  object-fit: cover;
+}
+
+.site-header-home .gate-art img {
+  height: min(78vw, 44svh);
+  object-position: center 42%;
+}
+
+.site-header-inner .gate-art img {
+  height: min(46vw, 28svh);
+  object-position: center 18%;
+}
+
+.site-header-home {
+  margin-bottom: -7.25rem;
+}
+
+.site-header-inner {
+  margin-bottom: 0;
+}
+
+.site-shell:has(.site-header-inner) main .wrap > .block:first-child {
+  margin-top: 1.25rem;
 }
 
 .site-menu {
   position: fixed;
   top: 0.65rem;
   right: 0.65rem;
-  z-index: 30;
+  z-index: 40;
 }
 
 main {
@@ -1300,51 +1300,44 @@ main {
   margin-top: 0;
 }
 
-@media (max-width: 40rem) {
-  .site-header-home .gate-arch {
-    height: 17.5rem;
-  }
-
-  .site-header-home {
-    margin-bottom: -6rem;
-  }
-
-  .gate-title,
-  .site-header-inner .gate-title {
-    top: 4.6rem;
-    width: min(94%, 40rem);
-  }
-
-  .site-header-inner .gate-arch {
-    height: 10.25rem;
-  }
-
-  .site-header-inner {
-    margin-bottom: -1.5rem;
-  }
-}
-
 @media (min-width: 56rem) {
-  .site-header-home .gate-arch {
-    height: 17.5rem;
+  .site-header-home .gate-art img {
+    height: min(42rem, 64svh);
+    object-position: center top;
   }
 
   .site-header-home {
-    margin-bottom: -3.5rem;
+    margin-bottom: -4rem;
   }
 
-  .gate-title {
-    top: 3.2rem;
-    width: min(68%, 42rem);
+  .site-header-home::after {
+    height: 8rem;
+  }
+
+  .site-header-inner .gate-art img {
+    height: 14rem;
+    object-position: center 20%;
   }
 }
 
-@media (max-width: 30rem) {
-  .gate-arch {
-    height: 12.25rem;
-  }
+.gate-home:focus-visible {
+  outline: 3px solid #ffb080;
+  outline-offset: -6px;
+}
 
-  .site-header-inner .gate-arch {
-    height: 8.25rem;
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .gate-art img {
+    animation: none;
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .menu-button {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 2px solid ButtonText;
+    box-shadow: none;
   }
 }
