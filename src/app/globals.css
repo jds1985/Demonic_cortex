@@ -109,7 +109,7 @@ ul.prose {
 }
 
 .block {
-  margin-top: 2.75rem;
+  margin-top: 4rem;
 }
 
 .skip {
@@ -157,16 +157,16 @@ ul.prose {
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.9;
+  opacity: 0.28;
 }
 
 .smoke {
   position: absolute;
   width: 46%;
   height: 28%;
-  background: radial-gradient(ellipse, rgba(28, 24, 24, 0.55), transparent 70%);
-  filter: blur(10px);
-  animation: smoke 16s ease-in-out infinite;
+  background: radial-gradient(ellipse, rgba(28, 24, 24, 0.28), transparent 70%);
+  filter: blur(14px);
+  animation: smoke 22s ease-in-out infinite;
 }
 
 .smoke-a {
@@ -824,10 +824,8 @@ button:disabled {
 
 .site-header {
   background: #080404;
-  border-bottom: 4px solid #5c3018;
-  box-shadow:
-    0 0 18px rgba(180, 40, 8, 0.45),
-    0 8px 0 #1a0606;
+  border-bottom: 2px solid #5c3018;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 .brand {
@@ -838,21 +836,165 @@ button:disabled {
 
 .reading-controls,
 .panel {
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(110, 16, 24, 0.42), transparent 58%),
-    linear-gradient(#12090a, #090506);
-  border-color: var(--iron);
-  box-shadow:
-    inset 0 0 0 2px #24110c,
-    inset 0 0 28px rgba(0, 0, 0, 0.72),
-    0 0 18px rgba(160, 36, 8, 0.28),
-    0.35rem 0.4rem 0 #140404;
+  background: linear-gradient(#12090a, #090506);
+  border-color: #4a2a1c;
+  box-shadow: none;
 }
 
 .panel {
   position: relative;
-  border-width: 3px;
+  border-width: 1px;
   border-style: solid;
+}
+
+.quiet-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.reading-settings {
+  position: relative;
+}
+
+.reading-settings-link,
+.reading-settings-close {
+  min-height: 2.75rem;
+  padding: 0.35rem 0.15rem;
+  background: transparent;
+  color: #ffd8b0;
+  border: 0;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.reading-settings-open {
+  margin: 0.75rem 0 0.25rem;
+}
+
+.reading-settings-panel {
+  display: grid;
+  gap: 0.85rem;
+  justify-items: start;
+  margin-top: 0.75rem;
+  padding: 1rem;
+  background: #12090a;
+  border: 1px solid #6a3a22;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+}
+
+.reading-settings:not(.reading-settings-prominent):not(.reading-settings-embedded) .reading-settings-panel {
+  position: absolute;
+  z-index: 8;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  width: min(22rem, calc(100vw - 1.5rem));
+  margin-top: 0;
+}
+
+.reading-settings-embedded .reading-settings-panel {
+  position: static;
+  width: 100%;
+}
+
+.header-inner {
+  justify-content: space-between;
+}
+
+.brand {
+  min-width: 0;
+}
+
+.site-menu {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.menu-button {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  min-width: 3.25rem;
+  min-height: 3.25rem;
+  padding: 0.3rem;
+  background: #12090a;
+  color: #f6efe6;
+  border: 2px solid #ff6a2a;
+  box-shadow: 0 0 14px rgba(255, 90, 20, 0.35);
+  cursor: pointer;
+}
+
+.menu-button svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.menu-button[aria-expanded="true"] {
+  background: #1c0c0e;
+  border-color: #ffd8b0;
+  box-shadow: 0 0 0 2px #ff6a2a;
+}
+
+.reading-settings-embedded .reading-settings-link {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.4rem 0;
+  font-size: 1.25rem;
+  text-align: left;
+}
+
+.menu-panel {
+  position: absolute;
+  z-index: 8;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  width: min(20rem, calc(100vw - 1.5rem));
+  padding: 0.4rem 0.9rem 0.9rem;
+  background: #12090a;
+  border: 1px solid #6a3a22;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+}
+
+.menu-panel ul {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-panel a {
+  min-height: 3rem;
+  font-size: 1.25rem;
+}
+
+.menu-panel .reading-settings {
+  border-top: 1px solid #4a2a1c;
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+}
+
+.reading-settings-panel .reading-controls {
+  display: grid;
+  gap: 0.85rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.reading-settings-close {
+  min-height: 2.75rem;
+  padding: 0.45rem 0.85rem;
+  border: 2px solid #c4552a;
+  text-decoration: none;
 }
 
 .reading-controls,

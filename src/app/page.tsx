@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ChapterList } from "@/components/chapter-list";
 import { CharacterGrid } from "@/components/character-grid";
 import { ContinueReading } from "@/components/continue-reading";
-import { HellRule } from "@/components/hell-rule";
 import { TrailerSection } from "@/components/trailer-section";
 import { coverAlt, coverSrc, premise } from "@/lib/site";
 
@@ -27,22 +26,19 @@ export default function HomePage() {
             <Link className="button" href="/read/1">
               Read Chapter 1 free
             </Link>
-            <Link className="button button-secondary" href="/characters">
-              Characters
-            </Link>
-            <ContinueReading />
           </div>
           <p className="prose">{premise}</p>
+          <p className="quiet-links">
+            <Link href="/characters">Characters</Link>
+            <ContinueReading />
+          </p>
         </div>
         <figure className="panel cover-slot">
           <Image src={coverSrc} alt={coverAlt} width={864} height={1152} priority sizes="(min-width: 56rem) 32rem, 100vw" />
         </figure>
       </section>
-      <HellRule />
       <ChapterList />
-      <HellRule />
       <CharacterGrid />
-      <HellRule />
       <TrailerSection videos={trailersFile.videos} />
     </div>
   );

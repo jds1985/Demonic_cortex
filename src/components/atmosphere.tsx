@@ -1,29 +1,9 @@
 const EMBERS = [
-  { left: 4, delay: 0, duration: 9, size: 0.28 },
-  { left: 9, delay: 1.4, duration: 12, size: 0.18 },
-  { left: 15, delay: 3.1, duration: 8, size: 0.4 },
-  { left: 22, delay: 0.6, duration: 11, size: 0.22 },
-  { left: 28, delay: 4.2, duration: 10, size: 0.34 },
-  { left: 36, delay: 2.2, duration: 13, size: 0.16 },
-  { left: 43, delay: 5.1, duration: 9, size: 0.46 },
-  { left: 51, delay: 1.1, duration: 12, size: 0.24 },
-  { left: 58, delay: 3.6, duration: 8, size: 0.32 },
-  { left: 66, delay: 0.4, duration: 14, size: 0.2 },
-  { left: 73, delay: 2.8, duration: 10, size: 0.42 },
-  { left: 81, delay: 4.8, duration: 9, size: 0.18 },
-  { left: 88, delay: 1.7, duration: 11, size: 0.36 },
-  { left: 94, delay: 3.3, duration: 8, size: 0.26 },
-];
-
-const ASH = [
-  { left: 7, delay: 0, duration: 18 },
-  { left: 19, delay: 4, duration: 22 },
-  { left: 33, delay: 1, duration: 16 },
-  { left: 47, delay: 6, duration: 20 },
-  { left: 61, delay: 2, duration: 19 },
-  { left: 74, delay: 5, duration: 17 },
-  { left: 86, delay: 3, duration: 21 },
-  { left: 96, delay: 7, duration: 18 },
+  { left: 8, delay: 0, duration: 14, size: 0.22 },
+  { left: 27, delay: 3.2, duration: 16, size: 0.16 },
+  { left: 54, delay: 1.4, duration: 15, size: 0.28 },
+  { left: 78, delay: 4.6, duration: 13, size: 0.18 },
+  { left: 92, delay: 2.1, duration: 17, size: 0.2 },
 ];
 
 export function Atmosphere() {
@@ -51,17 +31,6 @@ export function Atmosphere() {
               height: `${ember.size}rem`,
               animationDelay: `${ember.delay}s`,
               animationDuration: `${ember.duration}s`,
-            }}
-          />
-        ))}
-        {ASH.map((flake) => (
-          <span
-            key={`ash-${flake.left}`}
-            className="ash"
-            style={{
-              left: `${flake.left}%`,
-              animationDelay: `${flake.delay}s`,
-              animationDuration: `${flake.duration}s`,
             }}
           />
         ))}

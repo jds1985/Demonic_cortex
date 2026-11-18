@@ -10,8 +10,6 @@ export function ContinueReading() {
   if (!saved) return null;
 
   return (
-    <Link className="button button-secondary" href={`/read/${saved.chapter}`}>
-      Continue Chapter {saved.chapter}
-    </Link>
+    <Link href={`/read/${saved.chapter}`}>Continue Chapter {saved.chapter}</Link>
   );
 }

@@ -5,7 +5,6 @@ import { Suspense } from "react";
 
 import { Atmosphere } from "@/components/atmosphere";
 import { MusicPlayer } from "@/components/music-player";
-import { ReadingControls } from "@/components/reading-controls";
 import { ReadingPrefsSync } from "@/components/reading-prefs-sync";
 import { HeaderBar, SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -100,9 +99,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <SiteHeader />
           </Suspense>
           <main id="main" tabIndex={-1}>
-            <div className="wrap">
-              <ReadingControls />
-            </div>
             {children}
           </main>
           <SiteFooter />
