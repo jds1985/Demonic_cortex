@@ -1165,7 +1165,7 @@ nav a[aria-current="page"] {
   }
 
   body {
-    padding-bottom: 12rem;
+    padding-bottom: 18rem;
   }
 
   .button {
@@ -1342,7 +1342,9 @@ main {
     box-shadow: none;
   }
 
-  .sketch-page {
+  .sketch-page,
+  .journal-button,
+  .journal-cover-button {
     background: Canvas;
     color: CanvasText;
     border: 2px solid CanvasText;
@@ -1358,7 +1360,7 @@ main {
   --journal-indigo: #2c3a4f;
   --journal-moss: #6e8f78;
   --journal-silver: #d5dbe2;
-  padding-bottom: 2rem;
+  padding-bottom: 8rem;
 }
 
 .journal h1 {
@@ -1375,28 +1377,182 @@ main {
   color: #f7f1e8;
 }
 
-.journal-cover {
-  margin: 1.25rem auto 0;
-  max-width: 36rem;
+.journal-cover-button {
+  display: block;
+  width: min(100%, 32rem);
+  margin: 1rem auto 0;
   padding: 0.7rem;
   background: #141b26;
   border: 1px solid var(--journal-slate);
   box-shadow: 0.4rem 0.4rem 0 var(--journal-indigo);
+  cursor: pointer;
 }
 
-.journal-cover img {
+.journal-cover-button img {
   display: block;
   width: 100%;
   height: auto;
   background: #0e141c;
 }
 
-.journal-pages {
+.journal-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  min-width: 7.5rem;
+  margin: 0.85rem 0 0;
+  padding: 0.65rem 1.1rem;
+  background: #1b2836;
+  color: #f7f1e8;
+  border: 2px solid #d5dbe2;
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.journal-button:disabled {
+  opacity: 1;
+  background: #243244;
+  color: #f7f1e8;
+  border-color: #8ea0b5;
+  cursor: default;
+}
+
+.journal-open,
+.journal-close {
+  display: flex;
+  width: min(100%, 22rem);
+}
+
+.book-scene {
+  position: relative;
+  max-width: 100%;
+  margin-top: 0.75rem;
+  perspective: 1800px;
+  touch-action: pan-y;
+}
+
+.book-scene:focus {
+  outline: none;
+}
+
+.book-scene:focus-visible {
+  outline: 3px solid #ffb080;
+  outline-offset: 4px;
+}
+
+.leaf {
+  transform-origin: left center;
+  transition: transform 0.85s ease;
+}
+
+.leaf-next {
+  transform: rotateY(-68deg);
+}
+
+.leaf-back {
+  transform: rotateY(68deg);
+}
+
+.leaf-next,
+.leaf-back {
+  box-shadow: -1.25rem 0.4rem 1.5rem rgba(12, 10, 8, 0.45);
+}
+
+.leaf-snap,
+.leaf-snap.leaf-next,
+.leaf-snap.leaf-back {
+  transition: none;
+  transform: none;
+}
+
+.leaf-spread {
   display: grid;
-  gap: 1.25rem;
-  margin: 1.5rem 0 0;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+.page-edge,
+.page-edge:disabled {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  width: 22%;
+  margin: 0;
   padding: 0;
-  list-style: none;
+  border: 0;
+  background: transparent;
+  color: transparent;
+  box-shadow: none;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.page-edge:disabled {
+  cursor: default;
+}
+
+.page-edge-back {
+  left: 0;
+}
+
+.page-edge-next {
+  right: 0;
+}
+
+.journal-dock {
+  max-width: 100%;
+}
+
+.journal-count {
+  margin: 0.9rem 0 0;
+  color: #f7f1e8;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+@media (max-width: 40rem) {
+  .journal-dock {
+    position: fixed;
+    z-index: 7;
+    left: 0;
+    right: 0;
+    bottom: var(--player-clearance, 16rem);
+    margin: 0;
+    padding: 0.45rem 1rem 0.65rem;
+    background: #050303;
+  }
+
+  .journal-is-open {
+    padding-bottom: 14rem;
+  }
+
+  .journal-is-open .sketch-page {
+    max-height: min(16rem, calc(100svh - 30rem));
+    overflow: auto;
+  }
+}
+
+.journal-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  max-width: 100%;
+}
+
+.journal-nav .journal-button {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 100%;
+  margin-top: 0.75rem;
+}
+
+.journal-is-open .sketch-page {
+  min-height: 11rem;
 }
 
 .sketch-page {
@@ -1494,17 +1650,28 @@ main {
 }
 
 @media (min-width: 56rem) {
-  .journal-pages {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: stretch;
+  .journal {
+    padding-bottom: 3rem;
+  }
+
+  .book-scene.is-spread .leaf-spread {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .journal-open,
+  .journal-close {
+    width: auto;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sketch-page,
   .sketch-tape,
-  .journal-cover {
+  .leaf,
+  .leaf-next,
+  .leaf-back {
     animation: none;
     transition: none;
+    transform: none;
   }
 }
