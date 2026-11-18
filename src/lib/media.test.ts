@@ -18,6 +18,23 @@ describe("soundtrack and trailers", () => {
       tracks.map((track) => track.src),
       ["/audio/opening.mp3", "https://cdn.example.com/theme.mp3"],
     );
+    assert.deepEqual(
+      tracks.map((track) => track.downloadableForSubscribers),
+      [false, false],
+    );
+  });
+
+  it("keeps a subscriber-download flag without offering a download", () => {
+    const tracks = visibleTracks([
+      { title: "Preview", src: "/audio/preview.mp3", downloadableForSubscribers: false },
+      { title: "Full", src: "/audio/full.mp3", downloadableForSubscribers: true },
+      { title: "Unset", src: "/audio/unset.mp3" },
+      { title: "Bad flag", src: "/audio/bad.mp3", downloadableForSubscribers: "yes" },
+    ]);
+    assert.deepEqual(
+      tracks.map((track) => track.downloadableForSubscribers),
+      [false, true, false, false],
+    );
   });
 
   it("accepts only 11-character YouTube ids", () => {
@@ -31,6 +48,8 @@ describe("soundtrack and trailers", () => {
 
   it("allows character art only from /art", () => {
     assert.equal(publicArtPath("/art/rayne.webp"), "/art/rayne.webp");
+    assert.equal(publicArtPath("/art/journal/entry-one-1152.jpg"), "/art/journal/entry-one-1152.jpg");
+    assert.equal(publicArtPath("/art/journal/../cover.jpg"), null);
     assert.equal(publicArtPath("/placeholders/panel.svg"), null);
     assert.equal(publicArtPath("https://example.com/rayne.webp"), null);
     assert.equal(publicArtPath(null), null);

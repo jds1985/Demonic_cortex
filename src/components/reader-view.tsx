@@ -5,6 +5,7 @@ import type { ChapterDocument } from "@/lib/chapters";
 
 import { IllustratedPanel } from "./illustrated-panel";
 import { ReadingProgress } from "./reading-progress";
+import { ReadingSettings } from "./reading-settings";
 
 const ACCESS_LABEL = {
   free: "Free",
@@ -22,6 +23,7 @@ export function ReaderView({ chapter }: { chapter: ChapterDocument }) {
     <div className="wrap reader">
       <p className="kicker">Graphic novel</p>
       <h1>{chapter.title}</h1>
+      <ReadingSettings prominent />
       <p className={`status status-${chapter.access}`}>{ACCESS_LABEL[chapter.access]}</p>
       <ReadingProgress chapterNumber={chapter.number} />
       {pages ? (

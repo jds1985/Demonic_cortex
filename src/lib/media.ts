@@ -2,6 +2,8 @@ export interface Track {
   id: string;
   title: string;
   src: string;
+  /** Reserved for a later subscriber download. No download is offered yet. */
+  downloadableForSubscribers: boolean;
 }
 
 export interface Trailer {
@@ -17,13 +19,18 @@ export function visibleTracks(input: unknown): Track[] {
   const tracks: Track[] = [];
   for (const item of input) {
     if (!item || typeof item !== "object") continue;
-    const record = item as { id?: unknown; title?: unknown; src?: unknown };
+    const record = item as { id?: unknown; title?: unknown; src?: unknown; downloadableForSubscribers?: unknown };
     if (typeof record.title !== "string" || record.title.trim() === "") continue;
     if (typeof record.src !== "string" || !isSafeAudioSrc(record.src)) continue;
     const src = record.src.trim();
     const title = record.title.trim();
     const id = typeof record.id === "string" && record.id.trim() ? record.id.trim() : src;
-    tracks.push({ id, title, src });
+    tracks.push({
+      id,
+      title,
+      src,
+      downloadableForSubscribers: record.downloadableForSubscribers === true,
+    });
   }
   return tracks;
 }

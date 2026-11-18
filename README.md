@@ -32,11 +32,11 @@ Payments are not live. Do not set a live Stripe key.
 
 ## Reading tools
 
-The bar under the header is on every page:
+Open **Reading settings** from the header, or the larger button at the top of a chapter.
 
 - **Text size** has five steps. The default is the middle step, which is already large.
 - **Line spacing** has compact, comfortable, and open.
-- Choices are saved in this browser.
+- Choices are saved in this browser. The controls stay closed until you open them.
 
 On an illustrated page, **Zoom out**, **Zoom in**, and **Reset zoom** scale the picture inside its frame (100%, 150%, 200%, 300%). The frame scrolls on its own, so the rest of the page does not slide sideways. Each picture needs alt text.
 

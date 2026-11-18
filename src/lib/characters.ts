@@ -9,7 +9,7 @@ export interface Character {
   alt: string;
 }
 
-const ART_PATH = /^\/art\/[\w.-]+\.(png|jpe?g|webp|gif|avif)$/i;
+const ART_PATH = /^\/art\/(?:journal\/)?[\w.-]+\.(png|jpe?g|webp|gif|avif)$/i;
 
 /** Public character art lives under /public/art. Anything else is ignored. */
 export function publicArtPath(src: string | null): string | null {
