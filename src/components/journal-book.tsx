@@ -24,17 +24,6 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function readSavedPage(count: number): number {
-  try {
-    const raw = localStorage.getItem(PAGE_KEY);
-    const parsed = raw === null ? 0 : Number(raw);
-    if (!Number.isInteger(parsed) || parsed < 0 || parsed >= count) return 0;
-    return parsed;
-  } catch {
-    return 0;
-  }
-}
-
 function writeSavedPage(index: number): void {
   try {
     localStorage.setItem(PAGE_KEY, String(index));
@@ -79,12 +68,10 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
   }
 
   function openBook() {
-    const saved = readSavedPage(total);
-    const aligned = spread ? saved - (saved % step) : saved;
-    setIndex(aligned);
+    setIndex(0);
     setTurn(null);
     setOpen(true);
-    announce(aligned);
+    announce(0);
   }
 
   function closeBook() {
@@ -264,24 +251,49 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
   );
 }
 
+const SKETCH_WIDTHS = [480, 768, 1152] as const;
+
+function sketchSrcSet(src: string, extension: "jpg" | "webp"): string | undefined {
+  const match = src.match(/^(.*)-1152\.jpe?g$/i);
+  if (!match) return undefined;
+  return SKETCH_WIDTHS.map((width) => `${match[1]}-${width}.${extension} ${width}w`).join(", ");
+}
+
 function SketchSheet({ page }: { page: JournalPage }) {
   const open = page.paragraphs !== null;
   const label = open ? page.title : closedLabel(page);
+  const webp = page.image ? sketchSrcSet(page.image, "webp") : undefined;
+  const jpeg = page.image ? sketchSrcSet(page.image, "jpg") : undefined;
 
   return (
     <article className={open ? "sketch-page sketch-page-open" : "sketch-page sketch-page-closed"}>
-      <span className="sketch-tape" aria-hidden="true" />
+      {open ? null : <span className="sketch-tape" aria-hidden="true" />}
       <span className="sketch-stitch" aria-hidden="true" />
-      <h2>{label}</h2>
-      <p className="sketch-kind">{KIND[page.type]}</p>
+      {open && page.image ? (
+        <figure className="entry-sketch">
+          <span className="entry-tape entry-tape-tl" aria-hidden="true" />
+          <span className="entry-tape entry-tape-br" aria-hidden="true" />
+          <picture>
+            {webp ? <source type="image/webp" srcSet={webp} sizes="(min-width: 56rem) 22rem, calc(100vw - 6rem)" /> : null}
+            <img
+              src={page.image}
+              srcSet={jpeg}
+              sizes="(min-width: 56rem) 22rem, calc(100vw - 6rem)"
+              alt={page.imageAlt ?? page.title}
+              width={1152}
+              height={864}
+            />
+          </picture>
+        </figure>
+      ) : null}
+      <h2 className={open ? "entry-heading" : undefined}>{label}</h2>
+      {open ? null : <p className="sketch-kind">{KIND[page.type]}</p>}
       {open ? (
-        <div className="sketch-body">
-          {page.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={page.image} alt={page.title} />
-          ) : null}
+        <div className="entry-copy">
           {page.paragraphs?.map((paragraph, paragraphIndex) => (
-            <p key={`${page.id}-${paragraphIndex}`}>{paragraph}</p>
+            <p key={`${page.id}-${paragraphIndex}`} className={paragraph.align === "end" ? "entry-signoff" : undefined}>
+              {paragraph.text}
+            </p>
           ))}
         </div>
       ) : page.access === "locked" ? (

@@ -16,12 +16,14 @@ afterEach(() => {
 });
 
 describe("journal catalog", () => {
-  it("ships with no real entries", () => {
-    assert.deepEqual(journalEntries, []);
-  });
-
-  it("keeps every unpublished page closed, including for a subscriber", () => {
-    assert.equal(journalAccess(1), "upcoming");
+  it("publishes Entry One and keeps the later pages closed", () => {
+    assert.deepEqual(
+      journalEntries.map((entry) => entry.title),
+      ["Entry One", "Page 2", "Page 3"],
+    );
+    assert.equal(journalAccess(1), "free");
+    assert.equal(journalAccess(2), "upcoming");
+    assert.equal(journalAccess(3), "upcoming");
     assert.equal(journalAccess(0), null);
     assert.equal(canReadBody("upcoming", true), false);
     assert.equal(canReadBody("locked", false), false);
@@ -37,19 +39,37 @@ describe("journal catalog", () => {
     assert.equal(accessByOrder(0, 1, 7), null);
   });
 
-  it("shows closed placeholder pages and no writing", async () => {
+  it("shows Entry One in full and leaves the later pages shut", async () => {
     delete process.env.PRIVATE_JOURNAL_SOURCE;
     const pages = await loadJournalPages();
     assert.deepEqual(
       pages.map((page) => page.title),
-      ["Page 1", "Page 2", "Page 3"],
+      ["Entry One", "Page 2", "Page 3"],
     );
     assert.deepEqual(
-      pages.map((page) => page.type),
-      ["sketch", "entry", "mixed"],
+      pages.map((page) => page.access),
+      ["free", "upcoming", "upcoming"],
     );
-    for (const page of pages) {
-      assert.equal(page.access, "upcoming");
+    const entry = pages[0];
+    assert.equal(entry?.image, "/art/journal/entry-one-1152.jpg");
+    assert.equal(
+      entry?.imageAlt,
+      "Rayne's pencil sketch of a white two-story bed and breakfast on a grassy hill above a rocky ocean coast.",
+    );
+    assert.deepEqual(
+      entry?.paragraphs?.map((block) => block.text),
+      [
+        "Heaven, my baby,",
+        "We went overseas to fix things, your father and I. A family vacation. A fresh start. You laughed the whole flight to Europe and I thought, maybe this is it.",
+        "Then everything went wrong. The airline lost our bags, our money, our IDs. The sky turned gray and the wind wouldn't quit.",
+        "Then your father disappeared for a while and came back with a miracle. A limo, new clothes, food, and a room at a bed and breakfast on the coast, on a windy hill like a fairytale.",
+        "I sketched it the first night so I'd never forget it. I didn't know yet why I'd need to.",
+        "I should have asked how he paid for it.",
+        "Love you always,\nMom",
+      ],
+    );
+    assert.equal(entry?.paragraphs?.at(-1)?.align, "end");
+    for (const page of pages.slice(1)) {
       assert.equal(page.paragraphs, null);
       assert.equal(page.image, null);
     }
@@ -67,13 +87,14 @@ describe("journal catalog", () => {
         id: "page-1",
         number: 1,
         title: "Page 1",
-        unlockOrder: 1,
+        unlockOrder: 2,
         type: "mixed",
         image: "/art/secret.jpg",
       },
       true,
     );
     assert.equal(page.access, "upcoming");
+    assert.equal(page.imageAlt, null);
     assert.equal(page.paragraphs, null);
     assert.equal(page.image, null);
     assert.equal(JSON.stringify(page).includes("JOURNAL_SAMPLE_SHOULD_NOT_LEAK"), false);
@@ -106,7 +127,7 @@ describe("journal catalog", () => {
 
     const opened = await presentJournal(entry, "free", false);
     assert.equal(opened.access, "free");
-    assert.deepEqual(opened.paragraphs, ["OPEN_JOURNAL_SAMPLE"]);
+    assert.deepEqual(opened.paragraphs, [{ text: "OPEN_JOURNAL_SAMPLE" }]);
     assert.equal(opened.image, null);
     assert.equal(JSON.stringify(opened).includes(directory), false);
 
@@ -115,7 +136,7 @@ describe("journal catalog", () => {
       "locked",
       true,
     );
-    assert.deepEqual(subscribed.paragraphs, ["OPEN_JOURNAL_SAMPLE"]);
+    assert.deepEqual(subscribed.paragraphs, [{ text: "OPEN_JOURNAL_SAMPLE" }]);
     assert.equal(subscribed.image, "/art/journal-cover-864.jpg");
   });
 

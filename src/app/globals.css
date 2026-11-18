@@ -1607,6 +1607,86 @@ main {
   min-height: 11rem;
 }
 
+.journal-is-open .sketch-page-open {
+  max-height: calc(100svh - 28rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  clip-path: none;
+}
+
+.sketch-page-open .sketch-stitch {
+  border-left: 2px dashed #9a3030;
+}
+
+.entry-sketch {
+  position: relative;
+  width: min(92%, 24rem);
+  margin: 0.6rem auto 1.35rem;
+  transform: rotate(-2.2deg);
+}
+
+.entry-sketch img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  background: #f7f4ee;
+  border: 1px solid rgba(70, 48, 24, 0.18);
+  box-shadow: 0 0.55rem 1.15rem rgba(48, 32, 16, 0.28);
+}
+
+.entry-tape {
+  position: absolute;
+  z-index: 1;
+  width: 4.4rem;
+  height: 1.15rem;
+  background: rgba(232, 216, 180, 0.9);
+  box-shadow: 0 1px 2px rgba(40, 28, 12, 0.18);
+}
+
+.entry-tape-tl {
+  top: -0.35rem;
+  left: -0.2rem;
+  transform: rotate(-16deg);
+}
+
+.entry-tape-br {
+  right: -0.15rem;
+  bottom: -0.25rem;
+  transform: rotate(14deg);
+}
+
+.sketch-page-open .entry-heading,
+.sketch-page-open .entry-copy {
+  font-family: var(--font-hand), "Segoe Print", cursive;
+  font-weight: 600;
+  font-size: max(1.375rem, var(--reading-size));
+  line-height: max(1.7, var(--reading-leading));
+  color: #1a2744;
+}
+
+.sketch-page-open .entry-heading {
+  margin: 0.15rem 0 0.55rem;
+  color: #7a2424;
+  font-size: max(2rem, calc(var(--reading-size) * 1.35));
+  line-height: 1.15;
+}
+
+.entry-copy p {
+  margin: 0.7rem 0;
+}
+
+.entry-signoff {
+  text-align: right;
+  white-space: pre-line;
+}
+
+@media (min-width: 56rem) {
+  .journal-is-open .sketch-page-open {
+    max-height: calc(100svh - 34rem);
+  }
+}
+
 .sketch-page {
   position: relative;
   min-height: 16rem;

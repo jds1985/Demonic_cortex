@@ -48,6 +48,8 @@ describe("soundtrack and trailers", () => {
 
   it("allows character art only from /art", () => {
     assert.equal(publicArtPath("/art/rayne.webp"), "/art/rayne.webp");
+    assert.equal(publicArtPath("/art/journal/entry-one-1152.jpg"), "/art/journal/entry-one-1152.jpg");
+    assert.equal(publicArtPath("/art/journal/../cover.jpg"), null);
     assert.equal(publicArtPath("/placeholders/panel.svg"), null);
     assert.equal(publicArtPath("https://example.com/rayne.webp"), null);
     assert.equal(publicArtPath(null), null);

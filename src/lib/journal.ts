@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { journalEntries, type JournalEntry, type JournalKind } from "../../content/journal";
+import { journalEntries, type JournalBlock, type JournalEntry, type JournalKind } from "../../content/journal";
 import { isSubscriber } from "./access";
 import { canReadBody, type ChapterAccess } from "./catalog";
 import { publicArtPath } from "./characters";
@@ -13,12 +13,13 @@ export interface JournalPage {
   unlockOrder: number;
   type: JournalKind;
   image: string | null;
+  imageAlt: string | null;
   access: ChapterAccess;
-  paragraphs: string[] | null;
+  paragraphs: JournalBlock[] | null;
 }
 
-/** Nothing in the sketchbook is released yet. Raise these the same way chapter access opens. */
-export const JOURNAL_FREE_THROUGH = 0;
+/** Entry One is free. Later pages stay closed until their unlock order is raised. */
+export const JOURNAL_FREE_THROUGH = 1;
 export const JOURNAL_LOCKED_THROUGH = 0;
 
 const FILE_NAME = /^[\w.-]+$/;
@@ -76,23 +77,34 @@ export async function presentJournal(
   subscriber: boolean,
 ): Promise<JournalPage> {
   if (!canReadBody(access, subscriber)) {
-    return { ...entry, image: null, access, paragraphs: null };
+    return { ...entry, image: null, imageAlt: null, access, paragraphs: null };
+  }
+  if (entry.blocks && entry.blocks.length > 0) {
+    return {
+      ...entry,
+      image: publicArtPath(entry.image),
+      imageAlt: entry.imageAlt ?? null,
+      access,
+      paragraphs: entry.blocks,
+    };
   }
   const paragraphs = await readPrivateJournal(entry.number);
   return {
     ...entry,
     image: publicArtPath(entry.image),
+    imageAlt: entry.imageAlt ?? null,
     access,
     paragraphs,
   };
 }
 
-async function readPrivateJournal(number: number): Promise<string[] | null> {
+async function readPrivateJournal(number: number): Promise<JournalBlock[] | null> {
   const source = privateSource();
   if (!source) return null;
   try {
     const raw = await readSourceText(source, journalFileName(number));
-    return raw ? parseJournalJson(raw) : null;
+    const lines = raw ? parseJournalJson(raw) : null;
+    return lines ? lines.map((text) => ({ text })) : null;
   } catch {
     return null;
   }
