@@ -81,7 +81,7 @@ export function ReaderView({ chapter }: { chapter: ChapterDocument }) {
         ) : (
           <span />
         )}
-        <Link href="/#chapters">All chapters</Link>
+        <Link href="/chapters">All chapters</Link>
         {next ? (
           <Link className="button button-secondary" href={`/read/${next}`}>
             Next chapter
