@@ -1,12 +1,12 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { ChapterList } from "@/components/chapter-list";
 import { CharacterGrid } from "@/components/character-grid";
 import { ContinueReading } from "@/components/continue-reading";
 import { HellRule } from "@/components/hell-rule";
-import { InkSky } from "@/components/ink-sky";
 import { TrailerSection } from "@/components/trailer-section";
-import { premise } from "@/lib/site";
+import { coverAlt, coverSrc, premise } from "@/lib/site";
 
 import trailersFile from "../../content/trailers.json";
 
@@ -35,8 +35,7 @@ export default function HomePage() {
           <p className="prose">{premise}</p>
         </div>
         <figure className="panel cover-slot">
-          <InkSky />
-          <figcaption className="caption-bar">Cover art coming soon.</figcaption>
+          <Image src={coverSrc} alt={coverAlt} width={864} height={1152} priority sizes="(min-width: 56rem) 32rem, 100vw" />
         </figure>
       </section>
       <HellRule />

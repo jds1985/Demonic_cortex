@@ -11,6 +11,7 @@ import { HeaderBar, SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { visibleTracks } from "@/lib/media";
 import { readingPrefsBootstrapScript } from "@/lib/reading-prefs";
+import { coverAlt, coverSrc, siteDescription } from "@/lib/site";
 
 import soundtrackFile from "../../content/soundtrack.json";
 import "./globals.css";
@@ -38,13 +39,38 @@ const ui = Source_Sans_3({
 
 const tracks = visibleTracks(soundtrackFile.tracks);
 
+const shareImage = {
+  url: coverSrc,
+  width: 864,
+  height: 1152,
+  alt: coverAlt,
+};
+
+function siteUrl(): URL {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return new URL(process.env.NEXT_PUBLIC_SITE_URL);
+  if (process.env.VERCEL_URL) return new URL(`https://${process.env.VERCEL_URL}`);
+  return new URL("http://localhost:3000");
+}
+
 export const metadata: Metadata = {
+  metadataBase: siteUrl(),
   title: {
     default: "Demonic Cortex",
     template: "%s · Demonic Cortex",
   },
-  description:
-    "Demonic Cortex is a graphic novel in progress by Jim. Read Chapter 1 free. Later chapters stay locked until subscriptions open.",
+  description: siteDescription,
+  openGraph: {
+    title: "Demonic Cortex",
+    description: siteDescription,
+    type: "website",
+    images: [shareImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Demonic Cortex",
+    description: siteDescription,
+    images: [shareImage],
+  },
 };
 
 export const viewport: Viewport = {

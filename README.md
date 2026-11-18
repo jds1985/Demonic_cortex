@@ -136,6 +136,8 @@ There are no accounts yet, so `src/lib/access.ts` always reports that the visito
 
 ## Character art
 
+The home page uses the approved cover at `public/art/cover.jpg`. That same file is the Open Graph and Twitter card image. Set `NEXT_PUBLIC_SITE_URL` to the public site address when you have one, so those share links are absolute. The favicon stays the small horn mark, because the cover does not read at icon size.
+
 Portrait frames for Rayne, Heaven, Lou, and Duke are on the home page and on `/characters`. All four use the approved art in `public/art/`.
 
 To add or replace a portrait, put a raster file under `public/art/` and set `image` in `src/lib/characters.ts` to a path like `"/art/name.webp"`. Only `/art/` files are shown. Set `alt` to the character’s name. Keep descriptions short and free of plot surprises.
