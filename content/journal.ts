@@ -17,7 +17,7 @@ export interface JournalBlock {
 
 /**
  * Public journal catalog. Later entries stay in PRIVATE_JOURNAL_SOURCE.
- * Entries One, Two, and Three are approved for the public site.
+ * Entries One through Four are approved for the public site.
  */
 export interface JournalEntry {
   id: string;
@@ -90,6 +90,51 @@ function entryThreePages(): JournalEntry[] {
   ];
 }
 
+const RITUAL_ALT =
+  "Rayne's pencil sketch of a farmhouse at night, with a ritual circle and candles in the dirt in front of it.";
+const ARM_ALT =
+  "Rayne's pencil sketch of a forearm and hand covered in ancient writing, beside a small grid of the same symbols.";
+const STORM_ALT =
+  "Rayne's pencil sketch of a small farmhouse in heavy rain, with lightning in the clouds.";
+
+function entryFourPages(): JournalEntry[] {
+  const parts = entryBlocks("entry-four.txt");
+  const eyes = parts[4];
+  const storm = parts[7];
+  const signoff = parts[9];
+  if (!eyes || !storm || !signoff) return [];
+  return [
+    {
+      id: "entry-four",
+      number: 5,
+      title: "Entry Four",
+      unlockOrder: 5,
+      type: "mixed",
+      image: "/art/journal/entry-four-ritual-960.jpg",
+      imageAlt: RITUAL_ALT,
+      blocks: [parts[0], parts[1], parts[2], parts[3], { ...eyes, doodle: "eye" }].filter(
+        (block): block is JournalBlock => Boolean(block),
+      ),
+    },
+    {
+      id: "entry-four-continued",
+      number: 6,
+      title: "Entry Four, continued",
+      unlockOrder: 6,
+      type: "mixed",
+      image: "/art/journal/entry-four-arm-960.jpg",
+      imageAlt: ARM_ALT,
+      blocks: [
+        parts[5],
+        parts[6],
+        { ...storm, aside: "/art/journal/entry-four-storm-960.jpg", asideAlt: STORM_ALT },
+        parts[8],
+        { ...signoff, doodle: "signoff" },
+      ].filter((block): block is JournalBlock => Boolean(block)),
+    },
+  ];
+}
+
 export const journalEntries: JournalEntry[] = [
   {
     id: "entry-one",
@@ -113,6 +158,7 @@ export const journalEntries: JournalEntry[] = [
     blocks: entryBlocks("entry-two.txt"),
   },
   ...entryThreePages(),
-  { id: "page-5", number: 5, title: "Page 5", unlockOrder: 5, type: "sketch", image: null },
-  { id: "page-6", number: 6, title: "Page 6", unlockOrder: 6, type: "entry", image: null },
+  ...entryFourPages(),
+  { id: "page-7", number: 7, title: "Page 7", unlockOrder: 7, type: "sketch", image: null },
+  { id: "page-8", number: 8, title: "Page 8", unlockOrder: 8, type: "entry", image: null },
 ];

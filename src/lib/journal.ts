@@ -18,8 +18,8 @@ export interface JournalPage {
   paragraphs: JournalBlock[] | null;
 }
 
-/** Entries One through Three are free. Later pages stay closed until their unlock order is raised. */
-export const JOURNAL_FREE_THROUGH = 4;
+/** Entries One through Four are free. Later pages stay closed until their unlock order is raised. */
+export const JOURNAL_FREE_THROUGH = 6;
 export const JOURNAL_LOCKED_THROUGH = 0;
 
 const FILE_NAME = /^[\w.-]+$/;

@@ -266,6 +266,12 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
 
 const SKETCH_WIDTHS = [640, 960] as const;
 
+function sketchFrame(src: string): { width: number; height: number } {
+  if (/(?:hearse|ritual|arm)-960\./.test(src)) return { width: 960, height: 540 };
+  if (src.includes("storm")) return { width: 960, height: 960 };
+  return { width: 960, height: 720 };
+}
+
 function sketchSources(src: string): { src: string; srcSet?: string; webp?: string } {
   const png = src.match(/^(.*)-960\.png$/i);
   if (png) {
@@ -333,7 +339,7 @@ function SketchSheet({ page }: { page: JournalPage }) {
   const open = page.paragraphs !== null;
   const label = closedLabel(page);
   const sketch = page.image ? sketchSources(page.image) : undefined;
-  const wide = page.id === "entry-two" || page.id.startsWith("entry-three");
+  const wide = page.id === "entry-two" || page.id.startsWith("entry-three") || page.id.startsWith("entry-four");
 
   return (
     <article
@@ -354,7 +360,7 @@ function SketchSheet({ page }: { page: JournalPage }) {
               sizes={wide ? "(min-width: 56rem) 34rem, calc(100vw - 4.5rem)" : "(min-width: 56rem) 28rem, calc(100vw - 5rem)"}
               alt={page.imageAlt ?? ""}
               width={960}
-              height={sketch.src.includes("hearse") ? 540 : 720}
+              height={sketchFrame(sketch.src).height}
             />
           </picture>
         </figure>
@@ -410,7 +416,7 @@ function EntryParagraph({
               sizes="(min-width: 56rem) 12rem, 42vw"
               alt={paragraph.asideAlt ?? ""}
               width={960}
-              height={720}
+              height={sketchFrame(aside.src).height}
             />
           </picture>
         </figure>
