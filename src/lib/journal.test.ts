@@ -17,15 +17,17 @@ afterEach(() => {
 });
 
 describe("journal catalog", () => {
-  it("publishes Entry One and Entry Two and keeps the later pages closed", () => {
+  it("publishes the approved entries and keeps the later pages closed", () => {
     assert.deepEqual(
       journalEntries.map((entry) => entry.title),
-      ["Entry One", "Entry Two", "Page 3", "Page 4"],
+      ["Entry One", "Entry Two", "Entry Three", "Entry Three, continued", "Page 5", "Page 6"],
     );
     assert.equal(journalAccess(1), "free");
     assert.equal(journalAccess(2), "free");
-    assert.equal(journalAccess(3), "upcoming");
-    assert.equal(journalAccess(4), "upcoming");
+    assert.equal(journalAccess(3), "free");
+    assert.equal(journalAccess(4), "free");
+    assert.equal(journalAccess(5), "upcoming");
+    assert.equal(journalAccess(6), "upcoming");
     assert.equal(journalAccess(0), null);
     assert.equal(canReadBody("upcoming", true), false);
     assert.equal(canReadBody("locked", false), false);
@@ -55,11 +57,11 @@ describe("journal catalog", () => {
     const pages = await loadJournalPages();
     assert.deepEqual(
       pages.map((page) => page.title),
-      ["Entry One", "Entry Two", "Page 3", "Page 4"],
+      ["Entry One", "Entry Two", "Entry Three", "Entry Three, continued", "Page 5", "Page 6"],
     );
     assert.deepEqual(
       pages.map((page) => page.access),
-      ["free", "free", "upcoming", "upcoming"],
+      ["free", "free", "free", "free", "upcoming", "upcoming"],
     );
     const entry = pages[0];
     assert.equal(entry?.image, "/art/journal/entry-one-960.png");
@@ -102,7 +104,39 @@ describe("journal catalog", () => {
       ],
     );
     assert.equal(second?.paragraphs?.at(-1)?.align, "end");
-    for (const page of pages.slice(2)) {
+    const third = pages[2];
+    assert.equal(third?.image, "/art/journal/entry-three-parlor-960.jpg");
+    assert.equal(
+      third?.imageAlt,
+      "Rayne's pencil sketch of a dark two-story house behind an iron fence, with one lit window and a silhouette in it.",
+    );
+    assert.deepEqual(
+      third?.paragraphs?.map((block) => block.text),
+      [
+        "Heaven,",
+        "We left before sunrise in a car that wasn't ours. You sat in the front seat staring out the window and never said a word. I keep telling myself you're just tired.",
+        "I found an old farmhouse out in the fields, buried in grass and trees. Nobody has lived there in years. It's our hiding place now. Your father's note said to go only at night, so we slept through the day.",
+        'The address was a funeral parlor. Fog everywhere. I pounded on the door until a man let us in, and the second I said "Lou Cypher," everything changed.',
+        "Duke stayed in the shadows by the window the whole time. He said he'd help us on one condition. I was terrified of what he'd ask for.",
+      ],
+    );
+    assert.equal(third?.paragraphs?.[2]?.aside, "/art/journal/entry-three-farmhouse-960.jpg");
+    assert.equal(third?.paragraphs?.[4]?.doodle, "eye");
+    const fourth = pages[3];
+    assert.equal(fourth?.image, "/art/journal/entry-three-hearse-960.jpg");
+    assert.deepEqual(
+      fourth?.paragraphs?.map((block) => block.text),
+      [
+        "He wanted a kids' meal. Nuggets only. I'm not joking, Heaven.",
+        "His car is a hearse built out of an old muscle car. He ate in the back seat, singing, playing with the little toy. That's when I saw it on his wrist. The coffin charm bracelet from your father's book.",
+        'He came back to the farmhouse with us, stuck his head out the window like a dog, and said "This will do."',
+        "I don't know if I should trust him. But he's all we have.",
+        "Love you always,\nMom",
+      ],
+    );
+    assert.equal(fourth?.paragraphs?.at(-1)?.align, "end");
+    assert.equal(fourth?.paragraphs?.at(-1)?.doodle, "signoff");
+    for (const page of pages.slice(4)) {
       assert.equal(page.paragraphs, null);
       assert.equal(page.image, null);
     }
@@ -120,7 +154,7 @@ describe("journal catalog", () => {
         id: "page-1",
         number: 1,
         title: "Page 1",
-        unlockOrder: 3,
+        unlockOrder: 5,
         type: "mixed",
         image: "/art/secret.jpg",
       },
