@@ -266,10 +266,23 @@ export function JournalBook({ pages }: { pages: JournalPage[] }) {
 
 const SKETCH_WIDTHS = [640, 960] as const;
 
-function sketchSrcSet(src: string): string | undefined {
-  const match = src.match(/^(.*)-960\.png$/i);
-  if (!match) return undefined;
-  return SKETCH_WIDTHS.map((width) => `${match[1]}-${width}.png ${width}w`).join(", ");
+function sketchSources(src: string): { src: string; srcSet?: string; webp?: string } {
+  const png = src.match(/^(.*)-960\.png$/i);
+  if (png) {
+    return {
+      src,
+      srcSet: SKETCH_WIDTHS.map((width) => `${png[1]}-${width}.png ${width}w`).join(", "),
+    };
+  }
+  const jpg = src.match(/^(.*)-960\.jpe?g$/i);
+  if (jpg) {
+    return {
+      src,
+      srcSet: SKETCH_WIDTHS.map((width) => `${jpg[1]}-${width}.jpg ${width}w`).join(", "),
+      webp: SKETCH_WIDTHS.map((width) => `${jpg[1]}-${width}.webp ${width}w`).join(", "),
+    };
+  }
+  return { src };
 }
 
 function FlipBar({
@@ -319,7 +332,8 @@ function FlipBar({
 function SketchSheet({ page }: { page: JournalPage }) {
   const open = page.paragraphs !== null;
   const label = closedLabel(page);
-  const sketchSet = page.image ? sketchSrcSet(page.image) : undefined;
+  const sketch = page.image ? sketchSources(page.image) : undefined;
+  const wide = page.id === "entry-two" || page.id.startsWith("entry-three");
 
   return (
     <article
@@ -328,17 +342,21 @@ function SketchSheet({ page }: { page: JournalPage }) {
     >
       {open ? null : <span className="sketch-tape" aria-hidden="true" />}
       <span className="sketch-stitch" aria-hidden="true" />
-      {open && page.image ? (
-        <figure className="entry-sketch">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={page.image}
-            srcSet={sketchSet}
-            sizes="(min-width: 56rem) 28rem, calc(100vw - 5rem)"
-            alt={page.imageAlt ?? ""}
-            width={960}
-            height={720}
-          />
+      {open && sketch ? (
+        <figure className={wide ? "entry-sketch entry-sketch-wide" : "entry-sketch"}>
+          <picture>
+            {sketch.webp ? (
+              <source type="image/webp" srcSet={sketch.webp} sizes="(min-width: 56rem) 34rem, calc(100vw - 4.5rem)" />
+            ) : null}
+            <img
+              src={sketch.src}
+              srcSet={sketch.srcSet}
+              sizes={wide ? "(min-width: 56rem) 34rem, calc(100vw - 4.5rem)" : "(min-width: 56rem) 28rem, calc(100vw - 5rem)"}
+              alt={page.imageAlt ?? ""}
+              width={960}
+              height={sketch.src.includes("hearse") ? 540 : 720}
+            />
+          </picture>
         </figure>
       ) : null}
       {open ? null : <h2>{label}</h2>}
@@ -346,9 +364,7 @@ function SketchSheet({ page }: { page: JournalPage }) {
       {open ? (
         <div className="entry-copy">
           {page.paragraphs?.map((paragraph, paragraphIndex) => (
-            <p key={`${page.id}-${paragraphIndex}`} className={paragraph.align === "end" ? "entry-signoff" : undefined}>
-              {paragraph.text}
-            </p>
+            <EntryParagraph key={`${page.id}-${paragraphIndex}`} pageId={page.id} paragraph={paragraph} />
           ))}
         </div>
       ) : page.access === "locked" ? (
@@ -359,6 +375,113 @@ function SketchSheet({ page }: { page: JournalPage }) {
         <p className="sketch-closed">This page stays shut until it unlocks.</p>
       )}
     </article>
+  );
+}
+
+function EntryParagraph({
+  pageId,
+  paragraph,
+}: {
+  pageId: string;
+  paragraph: NonNullable<JournalPage["paragraphs"]>[number];
+}) {
+  if (paragraph.doodle === "signoff") {
+    return (
+      <div className="entry-signoff-row">
+        <EntryDoodle kind="charm" placement="row" />
+        <p className="entry-signoff">{paragraph.text}</p>
+        <StarDoodles />
+      </div>
+    );
+  }
+  const floated = pageId === "entry-two" ? doodleKind(paragraph.text) : null;
+  const aside = paragraph.aside ? sketchSources(paragraph.aside) : undefined;
+  return (
+    <p className={paragraph.align === "end" ? "entry-signoff" : undefined}>
+      {aside ? (
+        <figure className="entry-aside">
+          <picture>
+            {aside.webp ? (
+              <source type="image/webp" srcSet={aside.webp} sizes="(min-width: 56rem) 12rem, 42vw" />
+            ) : null}
+            <img
+              src={aside.src}
+              srcSet={aside.srcSet}
+              sizes="(min-width: 56rem) 12rem, 42vw"
+              alt={paragraph.asideAlt ?? ""}
+              width={960}
+              height={720}
+            />
+          </picture>
+        </figure>
+      ) : null}
+      {floated ? <EntryDoodle kind={floated} /> : null}
+      {paragraph.text}
+      {paragraph.doodle === "eye" ? <EntryDoodle kind="eye" placement="below" /> : null}
+    </p>
+  );
+}
+
+function StarDoodles() {
+  return (
+    <svg className="doodle doodle-stars" viewBox="0 0 28 70" aria-hidden="true">
+      <path d="M14 2 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6-4 -4-1.6 4-1.6 Z" fill="currentColor" />
+      <path d="M14 28 l1.8 4.4 4.4 1.8 -4.4 1.8 -1.8 4.4 -1.8-4.4 -4.4-1.8 4.4-1.8 Z" fill="currentColor" />
+      <path d="M14 52 l1.4 3.4 3.4 1.4 -3.4 1.4 -1.4 3.4 -1.4-3.4 -3.4-1.4 3.4-1.4 Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function doodleKind(text: string): "charm" | "eye" | "sky" | null {
+  if (text.startsWith("Inside the cover")) return "charm";
+  if (text.startsWith("Foreseen, Heaven")) return "eye";
+  if (text.startsWith("I'm going")) return "sky";
+  return null;
+}
+
+function EntryDoodle({
+  kind,
+  placement = "float",
+}: {
+  kind: "charm" | "eye" | "sky" | null;
+  placement?: "float" | "below" | "row";
+}) {
+  if (!kind) return null;
+  const place = placement === "float" ? "" : ` doodle-${placement}`;
+  if (kind === "charm") {
+    return (
+      <svg className={`doodle doodle-charm${place}`} viewBox="0 0 40 70" aria-hidden="true">
+        <circle cx="20" cy="5" r="3" fill="none" stroke="currentColor" strokeWidth="2.2" />
+        <path d="M20 8 V15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+        <path
+          d="M20 15 L12 23 L10 38 L20 58 L30 38 L28 23 Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+  if (kind === "eye") {
+    return (
+      <svg className={`doodle doodle-eye${place}`} viewBox="0 0 52 28" aria-hidden="true">
+        <path d="M2 14 Q26 1 50 14 Q26 27 2 14 Z" fill="none" stroke="currentColor" strokeWidth="1.7" />
+        <circle cx="26" cy="14" r="5.2" fill="none" stroke="currentColor" strokeWidth="1.7" />
+        <circle cx="26" cy="14" r="2.2" fill="currentColor" />
+      </svg>
+    );
+  }
+  return (
+    <svg className={`doodle doodle-sky${place}`} viewBox="0 0 78 58" aria-hidden="true">
+      <path
+        d="M32 4 C18 8 8 20 10 34 C12 46 22 54 36 56 C22 50 16 40 16 26 C16 14 22 6 32 4Z"
+        fill="currentColor"
+      />
+      <path d="M50 8 l2 4.6 4.6 2 -4.6 2 -2 4.6 -2-4.6 -4.6-2 4.6-2 Z" fill="currentColor" />
+      <path d="M66 26 l1.6 3.6 3.6 1.6 -3.6 1.6 -1.6 3.6 -1.6-3.6 -3.6-1.6 3.6-1.6 Z" fill="currentColor" />
+      <path d="M48 40 l1.5 3.2 3.2 1.5 -3.2 1.5 -1.5 3.2 -1.5-3.2 -3.2-1.5 3.2-1.5 Z" fill="currentColor" />
+    </svg>
   );
 }
 

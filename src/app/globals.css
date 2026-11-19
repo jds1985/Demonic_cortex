@@ -1657,6 +1657,108 @@ main {
   box-shadow: none;
 }
 
+.entry-sketch-wide {
+  width: 100%;
+  max-width: none;
+  margin: 0 0 0.15rem;
+}
+
+.doodle {
+  float: right;
+  clear: right;
+  display: block;
+  margin: 0.15rem 0 0.35rem 0.65rem;
+  color: #1a2744;
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.entry-copy p::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.doodle-charm {
+  width: 1.85rem;
+  height: 3.25rem;
+}
+
+.doodle-eye {
+  width: 2.2rem;
+  height: 1.2rem;
+  margin-top: 0.35rem;
+}
+
+.doodle-sky {
+  width: 3rem;
+  height: 2.25rem;
+}
+
+.entry-aside {
+  float: right;
+  width: min(44%, 12.5rem);
+  margin: 0.1rem 0 0.45rem 0.75rem;
+  background: transparent;
+  border: 0;
+}
+
+.entry-aside img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  mix-blend-mode: multiply;
+}
+
+.doodle-below {
+  float: none;
+  clear: both;
+  width: 2.2rem;
+  height: 1.2rem;
+  margin: 0.85rem auto 0.2rem;
+}
+
+.entry-signoff-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem 0.8rem;
+  max-width: 100%;
+  margin-top: 1.1rem;
+}
+
+.entry-signoff-row .entry-signoff {
+  margin: 0;
+}
+
+.entry-signoff-row p::after {
+  content: none;
+}
+
+.doodle-row,
+.doodle-stars {
+  float: none;
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.doodle-row {
+  width: 1.45rem;
+  height: 2.55rem;
+}
+
+.doodle-stars {
+  width: 1.35rem;
+  height: 3.2rem;
+  color: #1a2744;
+  opacity: 0.62;
+}
+
 .entry-sketch img {
   display: block;
   width: 100%;

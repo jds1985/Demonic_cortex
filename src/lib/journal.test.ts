@@ -17,14 +17,17 @@ afterEach(() => {
 });
 
 describe("journal catalog", () => {
-  it("publishes Entry One and keeps the later pages closed", () => {
+  it("publishes the approved entries and keeps the later pages closed", () => {
     assert.deepEqual(
       journalEntries.map((entry) => entry.title),
-      ["Entry One", "Page 2", "Page 3"],
+      ["Entry One", "Entry Two", "Entry Three", "Entry Three, continued", "Page 5", "Page 6"],
     );
     assert.equal(journalAccess(1), "free");
-    assert.equal(journalAccess(2), "upcoming");
-    assert.equal(journalAccess(3), "upcoming");
+    assert.equal(journalAccess(2), "free");
+    assert.equal(journalAccess(3), "free");
+    assert.equal(journalAccess(4), "free");
+    assert.equal(journalAccess(5), "upcoming");
+    assert.equal(journalAccess(6), "upcoming");
     assert.equal(journalAccess(0), null);
     assert.equal(canReadBody("upcoming", true), false);
     assert.equal(canReadBody("locked", false), false);
@@ -49,16 +52,16 @@ describe("journal catalog", () => {
     assert.equal(accessByOrder(0, 1, 7), null);
   });
 
-  it("shows Entry One in full and leaves the later pages shut", async () => {
+  it("shows the approved entries in full and leaves the later pages shut", async () => {
     delete process.env.PRIVATE_JOURNAL_SOURCE;
     const pages = await loadJournalPages();
     assert.deepEqual(
       pages.map((page) => page.title),
-      ["Entry One", "Page 2", "Page 3"],
+      ["Entry One", "Entry Two", "Entry Three", "Entry Three, continued", "Page 5", "Page 6"],
     );
     assert.deepEqual(
       pages.map((page) => page.access),
-      ["free", "upcoming", "upcoming"],
+      ["free", "free", "free", "free", "upcoming", "upcoming"],
     );
     const entry = pages[0];
     assert.equal(entry?.image, "/art/journal/entry-one-960.png");
@@ -79,7 +82,61 @@ describe("journal catalog", () => {
       ],
     );
     assert.equal(entry?.paragraphs?.at(-1)?.align, "end");
-    for (const page of pages.slice(1)) {
+    const second = pages[1];
+    assert.equal(second?.image, "/art/journal/entry-two-960.jpg");
+    assert.equal(
+      second?.imageAlt,
+      "Rayne's pencil sketch of Lou's open journal showing a werewolf, a vampire and a zombie, beside a candle, a leather pouch, and an envelope with her name on it.",
+    );
+    assert.deepEqual(
+      second?.paragraphs?.map((block) => block.text),
+      [
+        "Heaven,",
+        "Your father wasn't who he said he was. I have to write it down or I'll go crazy.",
+        "After the cave I laid you in bed and sat at the little desk with his journal and a leather pouch I found with it. I opened it and I cried.",
+        "Every page was worse than the last. Rituals. Creatures I can't even describe. The only ones I knew were a werewolf, a vampire, and something like a dead man walking.",
+        'Inside the cover it said "Property of Lou Cypher." Under it, a carving of a man on a throne who looks like your father. A woman beside him who looks like me. And a man with a coffin charm on his wrist. I drew it all tonight so I\'d never doubt what I saw.',
+        "Then an envelope fell out. One word on it, in his handwriting. Rayne.",
+        "His letter said if I'm reading it, he's most likely dead. Find Duke. This has been foreseen.",
+        "Foreseen, Heaven. By who?",
+        "I'm going to that address tomorrow.",
+        "Love you always,\nMom",
+      ],
+    );
+    assert.equal(second?.paragraphs?.at(-1)?.align, "end");
+    const third = pages[2];
+    assert.equal(third?.image, "/art/journal/entry-three-parlor-960.jpg");
+    assert.equal(
+      third?.imageAlt,
+      "Rayne's pencil sketch of a dark two-story house behind an iron fence, with one lit window and a silhouette in it.",
+    );
+    assert.deepEqual(
+      third?.paragraphs?.map((block) => block.text),
+      [
+        "Heaven,",
+        "We left before sunrise in a car that wasn't ours. You sat in the front seat staring out the window and never said a word. I keep telling myself you're just tired.",
+        "I found an old farmhouse out in the fields, buried in grass and trees. Nobody has lived there in years. It's our hiding place now. Your father's note said to go only at night, so we slept through the day.",
+        'The address was a funeral parlor. Fog everywhere. I pounded on the door until a man let us in, and the second I said "Lou Cypher," everything changed.',
+        "Duke stayed in the shadows by the window the whole time. He said he'd help us on one condition. I was terrified of what he'd ask for.",
+      ],
+    );
+    assert.equal(third?.paragraphs?.[2]?.aside, "/art/journal/entry-three-farmhouse-960.jpg");
+    assert.equal(third?.paragraphs?.[4]?.doodle, "eye");
+    const fourth = pages[3];
+    assert.equal(fourth?.image, "/art/journal/entry-three-hearse-960.jpg");
+    assert.deepEqual(
+      fourth?.paragraphs?.map((block) => block.text),
+      [
+        "He wanted a kids' meal. Nuggets only. I'm not joking, Heaven.",
+        "His car is a hearse built out of an old muscle car. He ate in the back seat, singing, playing with the little toy. That's when I saw it on his wrist. The coffin charm bracelet from your father's book.",
+        'He came back to the farmhouse with us, stuck his head out the window like a dog, and said "This will do."',
+        "I don't know if I should trust him. But he's all we have.",
+        "Love you always,\nMom",
+      ],
+    );
+    assert.equal(fourth?.paragraphs?.at(-1)?.align, "end");
+    assert.equal(fourth?.paragraphs?.at(-1)?.doodle, "signoff");
+    for (const page of pages.slice(4)) {
       assert.equal(page.paragraphs, null);
       assert.equal(page.image, null);
     }
@@ -97,7 +154,7 @@ describe("journal catalog", () => {
         id: "page-1",
         number: 1,
         title: "Page 1",
-        unlockOrder: 2,
+        unlockOrder: 5,
         type: "mixed",
         image: "/art/secret.jpg",
       },

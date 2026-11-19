@@ -18,8 +18,8 @@ export interface JournalPage {
   paragraphs: JournalBlock[] | null;
 }
 
-/** Entry One is free. Later pages stay closed until their unlock order is raised. */
-export const JOURNAL_FREE_THROUGH = 1;
+/** Entries One through Three are free. Later pages stay closed until their unlock order is raised. */
+export const JOURNAL_FREE_THROUGH = 4;
 export const JOURNAL_LOCKED_THROUGH = 0;
 
 const FILE_NAME = /^[\w.-]+$/;
@@ -76,25 +76,36 @@ export async function presentJournal(
   access: ChapterAccess,
   subscriber: boolean,
 ): Promise<JournalPage> {
+  const { blocks, ...page } = entry;
   if (!canReadBody(access, subscriber)) {
-    return { ...entry, image: null, imageAlt: null, access, paragraphs: null };
+    return { ...page, image: null, imageAlt: null, access, paragraphs: null };
   }
-  if (entry.blocks && entry.blocks.length > 0) {
+  if (blocks && blocks.length > 0) {
     return {
-      ...entry,
+      ...page,
       image: publicArtPath(entry.image),
       imageAlt: entry.imageAlt ?? null,
       access,
-      paragraphs: entry.blocks,
+      paragraphs: blocks.map(openBlock),
     };
   }
   const paragraphs = await readPrivateJournal(entry.number);
   return {
-    ...entry,
+    ...page,
     image: publicArtPath(entry.image),
     imageAlt: entry.imageAlt ?? null,
     access,
     paragraphs,
+  };
+}
+
+function openBlock(block: JournalBlock): JournalBlock {
+  const aside = publicArtPath(block.aside ?? null);
+  return {
+    text: block.text,
+    ...(block.align ? { align: block.align } : {}),
+    ...(block.doodle ? { doodle: block.doodle } : {}),
+    ...(aside ? { aside, asideAlt: block.asideAlt ?? null } : {}),
   };
 }
 
