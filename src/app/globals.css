@@ -1657,6 +1657,44 @@ main {
   box-shadow: none;
 }
 
+.entry-sketch-wide {
+  width: 100%;
+  max-width: none;
+  margin: 0 0 0.15rem;
+}
+
+.doodle {
+  float: right;
+  clear: right;
+  display: block;
+  margin: 0.15rem 0 0.35rem 0.65rem;
+  color: #1a2744;
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.entry-copy p::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.doodle-charm {
+  width: 1.85rem;
+  height: 3.25rem;
+}
+
+.doodle-eye {
+  width: 2.2rem;
+  height: 1.2rem;
+  margin-top: 0.35rem;
+}
+
+.doodle-sky {
+  width: 3rem;
+  height: 2.25rem;
+}
+
 .entry-sketch img {
   display: block;
   width: 100%;

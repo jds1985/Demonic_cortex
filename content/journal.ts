@@ -10,7 +10,7 @@ export interface JournalBlock {
 
 /**
  * Public journal catalog. Later entries stay in PRIVATE_JOURNAL_SOURCE.
- * Entry One is approved for the public site and is read from content/journal/entry-one.txt.
+ * Entry One and Entry Two are approved for the public site.
  */
 export interface JournalEntry {
   id: string;
@@ -28,10 +28,11 @@ export interface JournalEntry {
 const ENTRY_ONE_ALT =
   "Rayne's pencil sketch of a white two-story bed and breakfast on a grassy hill above a rocky ocean coast.";
 
-function entryOneBlocks(): JournalBlock[] {
-  const raw = readFileSync(path.join(process.cwd(), "content/journal/entry-one.txt"), "utf8");
-  const parts = raw.replace(/\r\n/g, "\n").trim().split(/\n{2,}/).slice(1);
-  return parts.map((part) => {
+function entryBlocks(fileName: string): JournalBlock[] {
+  const raw = readFileSync(path.join(process.cwd(), "content/journal", fileName), "utf8");
+  const parts = raw.replace(/\r\n/g, "\n").trim().split(/\n{2,}/);
+  const body = /^Entry\s+\w+$/.test(parts[0]?.trim() ?? "") ? parts.slice(1) : parts;
+  return body.map((part) => {
     const text = part.trim();
     return text.startsWith("Love you always,") ? { text, align: "end" as const } : { text };
   });
@@ -46,8 +47,19 @@ export const journalEntries: JournalEntry[] = [
     type: "mixed",
     image: "/art/journal/entry-one-960.png",
     imageAlt: ENTRY_ONE_ALT,
-    blocks: entryOneBlocks(),
+    blocks: entryBlocks("entry-one.txt"),
   },
-  { id: "page-2", number: 2, title: "Page 2", unlockOrder: 2, type: "sketch", image: null },
-  { id: "page-3", number: 3, title: "Page 3", unlockOrder: 3, type: "entry", image: null },
+  {
+    id: "entry-two",
+    number: 2,
+    title: "Entry Two",
+    unlockOrder: 2,
+    type: "mixed",
+    image: "/art/journal/entry-two-960.jpg",
+    imageAlt:
+      "Rayne's pencil sketch of Lou's open journal showing a werewolf, a vampire and a zombie, beside a candle, a leather pouch, and an envelope with her name on it.",
+    blocks: entryBlocks("entry-two.txt"),
+  },
+  { id: "page-3", number: 3, title: "Page 3", unlockOrder: 3, type: "sketch", image: null },
+  { id: "page-4", number: 4, title: "Page 4", unlockOrder: 4, type: "entry", image: null },
 ];
