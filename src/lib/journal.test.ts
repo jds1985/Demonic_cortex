@@ -20,14 +20,16 @@ describe("journal catalog", () => {
   it("publishes the approved entries and keeps the later pages closed", () => {
     assert.deepEqual(
       journalEntries.map((entry) => entry.title),
-      ["Entry One", "Entry Two", "Entry Three", "Entry Three, continued", "Page 5", "Page 6"],
+      ["Entry One", "Entry Two", "Entry Three", "Entry Three, continued", "Entry Four", "Entry Four, continued", "Page 7", "Page 8"],
     );
     assert.equal(journalAccess(1), "free");
     assert.equal(journalAccess(2), "free");
     assert.equal(journalAccess(3), "free");
     assert.equal(journalAccess(4), "free");
-    assert.equal(journalAccess(5), "upcoming");
-    assert.equal(journalAccess(6), "upcoming");
+    assert.equal(journalAccess(5), "free");
+    assert.equal(journalAccess(6), "free");
+    assert.equal(journalAccess(7), "upcoming");
+    assert.equal(journalAccess(8), "upcoming");
     assert.equal(journalAccess(0), null);
     assert.equal(canReadBody("upcoming", true), false);
     assert.equal(canReadBody("locked", false), false);
@@ -57,11 +59,11 @@ describe("journal catalog", () => {
     const pages = await loadJournalPages();
     assert.deepEqual(
       pages.map((page) => page.title),
-      ["Entry One", "Entry Two", "Entry Three", "Entry Three, continued", "Page 5", "Page 6"],
+      ["Entry One", "Entry Two", "Entry Three", "Entry Three, continued", "Entry Four", "Entry Four, continued", "Page 7", "Page 8"],
     );
     assert.deepEqual(
       pages.map((page) => page.access),
-      ["free", "free", "free", "free", "upcoming", "upcoming"],
+      ["free", "free", "free", "free", "free", "free", "upcoming", "upcoming"],
     );
     const entry = pages[0];
     assert.equal(entry?.image, "/art/journal/entry-one-960.png");
@@ -136,7 +138,47 @@ describe("journal catalog", () => {
     );
     assert.equal(fourth?.paragraphs?.at(-1)?.align, "end");
     assert.equal(fourth?.paragraphs?.at(-1)?.doodle, "signoff");
-    for (const page of pages.slice(4)) {
+    const fifth = pages[4];
+    assert.equal(fifth?.image, "/art/journal/entry-four-ritual-960.jpg");
+    assert.equal(
+      fifth?.imageAlt,
+      "Rayne's pencil sketch of a farmhouse at night, with a ritual circle and candles in the dirt in front of it.",
+    );
+    assert.deepEqual(
+      fifth?.paragraphs?.map((block) => block.text),
+      [
+        "Heaven,",
+        "Duke spent the whole night walking the farmhouse grounds. He scratched a circle and symbols into the dirt, set candles around it, and whispered in a language I've never heard. I watched from the porch and didn't ask.",
+        "When he finally started explaining things, he kept to the shadows. Every single time. The more he hid, the more I needed to see him.",
+        "He noticed. He stopped talking, turned around in the dark, and his eyes glowed blue. Not scary. Kind, somehow.",
+        "He asked if I knew what he was. I didn't. He's half human, half incubus. His kind seduce women, but he says he's different. He does it out of love. That's why his eyes are blue.",
+      ],
+    );
+    assert.equal(fifth?.paragraphs?.[4]?.doodle, "eye");
+    const sixth = pages[5];
+    assert.equal(sixth?.image, "/art/journal/entry-four-arm-960.jpg");
+    assert.equal(
+      sixth?.imageAlt,
+      "Rayne's pencil sketch of a forearm and hand covered in ancient writing, beside a small grid of the same symbols.",
+    );
+    assert.deepEqual(
+      sixth?.paragraphs?.map((block) => block.text),
+      [
+        "When he finally stepped into the moonlight, I saw his skin. Dark, and covered in ancient writing, like armor tattooed right onto him. It shimmered when he moved.",
+        "I drew what I could remember of it. I don't know what it says. I'm not sure I want to.",
+        "Later a storm rolled in. Rain, thunder, lightning all around the farmhouse. Some things a mother doesn't write down for her daughter, so I'll leave it there.",
+        "You slept through all of it. I checked on you twice.",
+        "Love you always,\nMom",
+      ],
+    );
+    assert.equal(sixth?.paragraphs?.[2]?.aside, "/art/journal/entry-four-storm-960.jpg");
+    assert.equal(
+      sixth?.paragraphs?.[2]?.asideAlt,
+      "Rayne's pencil sketch of a small farmhouse in heavy rain, with lightning in the clouds.",
+    );
+    assert.equal(sixth?.paragraphs?.at(-1)?.align, "end");
+    assert.equal(sixth?.paragraphs?.at(-1)?.doodle, "signoff");
+    for (const page of pages.slice(6)) {
       assert.equal(page.paragraphs, null);
       assert.equal(page.image, null);
     }
@@ -154,7 +196,7 @@ describe("journal catalog", () => {
         id: "page-1",
         number: 1,
         title: "Page 1",
-        unlockOrder: 5,
+        unlockOrder: 7,
         type: "mixed",
         image: "/art/secret.jpg",
       },
