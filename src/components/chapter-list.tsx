@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { listChapters, type ChapterAccess } from "@/lib/catalog";
+import { getComicChapter } from "@/lib/comics";
 
 const STATUS: Record<ChapterAccess, string> = {
   free: "Free",
@@ -24,7 +25,10 @@ export function ChapterList({ level = "h2" }: { level?: "h1" | "h2" }) {
         {chapters.map((chapter) => (
           <li key={chapter.number} className="panel chapter-row">
             <Title>
-              <Link href={`/read/${chapter.number}`}>{chapter.title}</Link>
+              <Link href={`/read/${chapter.number}`}>
+                {chapter.title}
+                {getComicChapter(chapter.number) ? `: ${getComicChapter(chapter.number)?.name}` : null}
+              </Link>
             </Title>
             <p className={`status status-${chapter.access}`}>{STATUS[chapter.access]}</p>
             {chapter.access === "free" ? (
