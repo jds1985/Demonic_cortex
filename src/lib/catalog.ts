@@ -1,5 +1,6 @@
 export const CHAPTER_COUNT = 13;
-export const FREE_CHAPTER = 1;
+/** Chapters 1 through FREE_THROUGH are free to read. */
+export const FREE_THROUGH = 2;
 export const LOCKED_THROUGH = 7;
 
 export type ChapterAccess = "free" | "locked" | "upcoming";
@@ -14,7 +15,7 @@ export function chapterAccess(number: number): ChapterAccess | null {
   if (!Number.isInteger(number) || number < 1 || number > CHAPTER_COUNT) {
     return null;
   }
-  if (number === FREE_CHAPTER) return "free";
+  if (number <= FREE_THROUGH) return "free";
   if (number <= LOCKED_THROUGH) return "locked";
   return "upcoming";
 }

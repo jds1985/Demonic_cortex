@@ -5,14 +5,14 @@ import { isSubscriber } from "./access";
 import { canReadBody, chapterAccess, listChapters, parseChapterNumber } from "./catalog";
 
 describe("chapter catalog", () => {
-  it("lists 13 chapters with free, locked, and upcoming access", () => {
+  it("lists 13 chapters: 1-2 free, 3-7 locked, 8-13 upcoming", () => {
     const chapters = listChapters();
     assert.equal(chapters.length, 13);
     assert.deepEqual(
       chapters.map((chapter) => chapter.access),
       [
         "free",
-        "locked",
+        "free",
         "locked",
         "locked",
         "locked",

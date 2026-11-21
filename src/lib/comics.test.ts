@@ -40,7 +40,19 @@ describe("comic chapters", () => {
     assert.equal(clampLeaf(chapter, -3), 0);
   });
 
+  it("opens chapter 2, The Book of Lies, the same way", () => {
+    const chapter = getComicChapter(2);
+    assert.ok(chapter);
+    assert.equal(chapter.leaves.length, 22);
+    assert.equal(chapter.heading, "Chapter Two");
+    assert.equal(chapter.name, "The Book of Lies");
+    assert.equal(chapter.folder, "/comics/ch02");
+    assert.equal(chapter.leaves[0]?.kind, "cover");
+    assert.equal(chapter.leaves[1]?.alt, "Title page. Demonic Cortex. Chapter Two: The Book of Lies.");
+    assert.equal(chapter.leaves[21]?.stem, "p20");
+  });
+
   it("has no comic for chapters without art", () => {
-    assert.equal(getComicChapter(2), null);
+    assert.equal(getComicChapter(3), null);
   });
 });

@@ -251,6 +251,42 @@ a.minor:visited {
   color: #fff6e8;
 }
 
+.nextChapter,
+.nextChapter:visited {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: min(100%, 42rem);
+  padding: 0.9rem 1rem;
+  font-family: var(--font-ui), "Segoe UI", sans-serif;
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  background: #ffd84d;
+  border: 4px solid #fff;
+  outline: 3px solid #000;
+  border-radius: 0.6rem;
+}
+
+.nextName {
+  font-size: 0.75em;
+}
+
+@media (hover: hover) {
+  .nextChapter:hover {
+    background: #fff07a;
+  }
+}
+
+.nextChapter:focus-visible {
+  outline: 5px solid #4dd2ff;
+  outline-offset: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .leaf,
   .underShade,

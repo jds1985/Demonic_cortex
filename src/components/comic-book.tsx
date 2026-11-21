@@ -37,7 +37,13 @@ function zoomedIn(): boolean {
   return scale > 1.05;
 }
 
-export function ComicBook({ chapter }: { chapter: ComicChapter }) {
+export interface NextChapterLink {
+  href: string;
+  /** e.g. "Chapter 2: The Book of Lies" */
+  label: string;
+}
+
+export function ComicBook({ chapter, nextChapter = null }: { chapter: ComicChapter; nextChapter?: NextChapterLink | null }) {
   const leaves = chapter.leaves;
   const last = leaves.length - 1;
   const [index, setIndex] = useState(0);
@@ -267,6 +273,14 @@ export function ComicBook({ chapter }: { chapter: ComicChapter }) {
           Next <span aria-hidden="true">▶</span>
         </button>
       </div>
+      {atEnd && !turn && nextChapter ? (
+        <Link className={styles.nextChapter} href={nextChapter.href} data-no-flip-keys>
+          <span>Next chapter</span>
+          <span className={styles.nextName}>
+            {nextChapter.label} <span aria-hidden="true">▶</span>
+          </span>
+        </Link>
+      ) : null}
       <div className={styles.extras}>
         {!atStart ? (
           <button type="button" className={styles.minor} onClick={() => go(0)}>

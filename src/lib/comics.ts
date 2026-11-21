@@ -47,6 +47,14 @@ const SOURCES: ComicChapterSource[] = [
     coverAlt:
       "Chapter 1 cover. Rayne, in a long black coat with silver braids, stands before burning iron gates while Heaven's spirit floats above, under the glowing title Demonic Cortex.",
   },
+  {
+    number: 2,
+    heading: "Chapter Two",
+    name: "The Book of Lies",
+    pageCount: 20,
+    coverAlt:
+      "Chapter 2 cover. Under the glowing title Demonic Cortex, Rayne in a black coat and red top holds open a burning book marked with a trident. Smoke shapes of a werewolf, a vampire and a throne of skulls rise behind her, and a sealed envelope floats at her side. Subtitle: Chapter Two, The Book of Lies.",
+  },
 ];
 
 function buildChapter(source: ComicChapterSource): ComicChapter {
