@@ -18,7 +18,7 @@ export function ChapterList({ level = "h2" }: { level?: "h1" | "h2" }) {
     <section className="block" id="chapters" aria-labelledby="chapters-heading">
       <Heading id="chapters-heading">Chapters</Heading>
       <p className="prose">
-        Thirteen chapters are planned. Chapters 1 and 2 are free. Chapters 3 through 7 open with a subscription.
+        Thirteen chapters are planned. Chapters 1 through 3 are free. Chapters 4 through 7 open with a subscription.
         Chapters 8 through 13 are still to come.
       </p>
       <ol className="chapter-list">

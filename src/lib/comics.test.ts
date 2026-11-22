@@ -52,7 +52,18 @@ describe("comic chapters", () => {
     assert.equal(chapter.leaves[21]?.stem, "p20");
   });
 
+  it("opens chapter 3, Help in the Darkness, the same way", () => {
+    const chapter = getComicChapter(3);
+    assert.ok(chapter);
+    assert.equal(chapter.leaves.length, 22);
+    assert.equal(chapter.heading, "Chapter Three");
+    assert.equal(chapter.name, "Help in the Darkness");
+    assert.equal(chapter.folder, "/comics/ch03");
+    assert.equal(chapter.leaves[1]?.alt, "Title page. Demonic Cortex. Chapter Three: Help in the Darkness.");
+    assert.equal(chapter.leaves[21]?.stem, "p20");
+  });
+
   it("has no comic for chapters without art", () => {
-    assert.equal(getComicChapter(3), null);
+    assert.equal(getComicChapter(4), null);
   });
 });

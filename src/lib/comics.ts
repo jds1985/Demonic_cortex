@@ -55,6 +55,14 @@ const SOURCES: ComicChapterSource[] = [
     coverAlt:
       "Chapter 2 cover. Under the glowing title Demonic Cortex, Rayne in a black coat and red top holds open a burning book marked with a trident. Smoke shapes of a werewolf, a vampire and a throne of skulls rise behind her, and a sealed envelope floats at her side. Subtitle: Chapter Two, The Book of Lies.",
   },
+  {
+    number: 3,
+    heading: "Chapter Three",
+    name: "Help in the Darkness",
+    pageCount: 20,
+    coverAlt:
+      "Chapter 3 cover. Under the glowing title Demonic Cortex, Rayne in a long black coat holds Heaven, wrapped in a blanket with her patched teddy bear, in the fog outside a funeral parlor. A tall man in a wide-brim hat stands as a silhouette in the lit doorway, and a glossy black Firebird hearse with a glowing coffin emblem waits beside them. Subtitle: Chapter Three, Help in the Darkness.",
+  },
 ];
 
 function buildChapter(source: ComicChapterSource): ComicChapter {

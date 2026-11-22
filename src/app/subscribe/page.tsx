@@ -17,8 +17,8 @@ export default function SubscribePage() {
         <p className="kicker">Cipher CTS</p>
         <h1 id="subscribe-title">Subscribe</h1>
         <p className="prose">
-          Cortex Reader is the planned way to open locked chapters, including the illustrated pages. Chapters 1 and 2
-          stay free. Nothing on this page charges a card.
+          Cortex Reader is the planned way to open locked chapters, including the illustrated pages. Chapters 1
+          through 3 stay free. Nothing on this page charges a card.
         </p>
         <dl className="facts">
           <div>

@@ -4,7 +4,7 @@ import { ChapterList } from "@/components/chapter-list";
 
 export const metadata: Metadata = {
   title: "Chapters",
-  description: "Thirteen chapters of Demonic Cortex. Chapters 1 and 2 are free. Later chapters stay locked until subscriptions open.",
+  description: "Thirteen chapters of Demonic Cortex. Chapters 1 through 3 are free. Later chapters stay locked until subscriptions open.",
 };
 
 export default function ChaptersPage() {
