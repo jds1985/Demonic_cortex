@@ -74,7 +74,18 @@ describe("comic chapters", () => {
     assert.equal(chapter.leaves[22]?.stem, "p21");
   });
 
+  it("opens chapter 5, Key Ingredients, with 34 pages", () => {
+    const chapter = getComicChapter(5);
+    assert.ok(chapter);
+    assert.equal(chapter.leaves.length, 36);
+    assert.equal(chapter.heading, "Chapter Five");
+    assert.equal(chapter.name, "Key Ingredients");
+    assert.equal(chapter.folder, "/comics/ch05");
+    assert.equal(chapter.leaves[1]?.alt, "Title page. Demonic Cortex. Chapter Five: Key Ingredients.");
+    assert.equal(chapter.leaves[35]?.stem, "p34");
+  });
+
   it("has no comic for chapters without art", () => {
-    assert.equal(getComicChapter(5), null);
+    assert.equal(getComicChapter(6), null);
   });
 });

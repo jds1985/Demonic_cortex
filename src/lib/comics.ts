@@ -71,6 +71,14 @@ const SOURCES: ComicChapterSource[] = [
     coverAlt:
       "Chapter 4 cover. Under the glowing title Demonic Cortex, Duke stands in the rain with his long coat open, his glowing blue eyes under a wide-brim hat and ancient script shimmering across his chest like armor. Rayne leans into him under his arm. Lightning strikes behind an old farmhouse, and the black Firebird hearse with its glowing coffin emblem waits beside them. Subtitle: Chapter Four, The Pleasure of Knowing.",
   },
+  {
+    number: 5,
+    heading: "Chapter Five",
+    name: "Key Ingredients",
+    pageCount: 34,
+    coverAlt:
+      "Chapter 5 cover. Under the glowing title Demonic Cortex and a full moon, Rayne holds up a small silver locket on a chain while Duke grins behind her, his blue eyes glowing under his wide-brim hat. A ribbon of blue light winds around them through a frame of deadly ingredients: oleander flowers, a golden poison frog, monarch butterflies, a cassowary, scarab beetles, red berries and copper nuggets. An old barn stands in the background. Subtitle: Chapter Five, Key Ingredients.",
+  },
 ];
 
 function buildChapter(source: ComicChapterSource): ComicChapter {
