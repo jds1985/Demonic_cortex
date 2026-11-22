@@ -63,7 +63,18 @@ describe("comic chapters", () => {
     assert.equal(chapter.leaves[21]?.stem, "p20");
   });
 
+  it("opens chapter 4, The Pleasure of Knowing, with 21 pages", () => {
+    const chapter = getComicChapter(4);
+    assert.ok(chapter);
+    assert.equal(chapter.leaves.length, 23);
+    assert.equal(chapter.heading, "Chapter Four");
+    assert.equal(chapter.name, "The Pleasure of Knowing");
+    assert.equal(chapter.folder, "/comics/ch04");
+    assert.equal(chapter.leaves[1]?.alt, "Title page. Demonic Cortex. Chapter Four: The Pleasure of Knowing.");
+    assert.equal(chapter.leaves[22]?.stem, "p21");
+  });
+
   it("has no comic for chapters without art", () => {
-    assert.equal(getComicChapter(4), null);
+    assert.equal(getComicChapter(5), null);
   });
 });

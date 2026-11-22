@@ -18,7 +18,7 @@ export default function SubscribePage() {
         <h1 id="subscribe-title">Subscribe</h1>
         <p className="prose">
           Cortex Reader is the planned way to open locked chapters, including the illustrated pages. Chapters 1
-          through 3 stay free. Nothing on this page charges a card.
+          through 4 stay free. Nothing on this page charges a card.
         </p>
         <dl className="facts">
           <div>

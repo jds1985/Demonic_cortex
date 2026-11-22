@@ -63,6 +63,14 @@ const SOURCES: ComicChapterSource[] = [
     coverAlt:
       "Chapter 3 cover. Under the glowing title Demonic Cortex, Rayne in a long black coat holds Heaven, wrapped in a blanket with her patched teddy bear, in the fog outside a funeral parlor. A tall man in a wide-brim hat stands as a silhouette in the lit doorway, and a glossy black Firebird hearse with a glowing coffin emblem waits beside them. Subtitle: Chapter Three, Help in the Darkness.",
   },
+  {
+    number: 4,
+    heading: "Chapter Four",
+    name: "The Pleasure of Knowing",
+    pageCount: 21,
+    coverAlt:
+      "Chapter 4 cover. Under the glowing title Demonic Cortex, Duke stands in the rain with his long coat open, his glowing blue eyes under a wide-brim hat and ancient script shimmering across his chest like armor. Rayne leans into him under his arm. Lightning strikes behind an old farmhouse, and the black Firebird hearse with its glowing coffin emblem waits beside them. Subtitle: Chapter Four, The Pleasure of Knowing.",
+  },
 ];
 
 function buildChapter(source: ComicChapterSource): ComicChapter {
