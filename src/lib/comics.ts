@@ -87,6 +87,14 @@ const SOURCES: ComicChapterSource[] = [
     coverAlt:
       "Chapter 6 cover. Rayne and Duke ride in the glossy black Firebird hearse, its glowing coffin emblem on the nose, bursting out of a flaming coffin-shaped portal. Rayne sits on the left and Duke grins behind the wheel on the right, his blue eyes glowing under his wide-brim hat. Around them swirl deadly ingredients: oleander flowers, a golden poison frog, a black widow spider, a jellyfish, monarch butterflies and dark berries. Title: Chapter Six, The Scenic Route.",
   },
+  {
+    number: 7,
+    heading: "Chapter Seven",
+    name: "Where We're Going",
+    pageCount: 35,
+    coverAlt:
+      "Chapter 7 cover. The glossy black Firebird hearse, frosted white and crackling with blue lightning, roars out of a flaming coffin-shaped portal at dusk, its glowing coffin emblem on the nose. Rayne smiles from the passenger seat on the left and Duke grins behind the wheel on the right, his blue eyes glowing under his wide-brim hat. Two trails of fire burn behind them. Title: Chapter Seven, Where We're Going.",
+  },
 ];
 
 function buildChapter(source: ComicChapterSource): ComicChapter {
