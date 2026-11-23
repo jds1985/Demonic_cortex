@@ -107,7 +107,18 @@ describe("comic chapters", () => {
     assert.equal(chapter.leaves[36]?.stem, "p35");
   });
 
+  it("opens chapter 8, Home Fires, with 34 pages", () => {
+    const chapter = getComicChapter(8);
+    assert.ok(chapter);
+    assert.equal(chapter.leaves.length, 36);
+    assert.equal(chapter.heading, "Chapter Eight");
+    assert.equal(chapter.name, "Home Fires");
+    assert.equal(chapter.folder, "/comics/ch08");
+    assert.equal(chapter.leaves[1]?.alt, "Title page. Demonic Cortex. Chapter Eight: Home Fires.");
+    assert.equal(chapter.leaves[35]?.stem, "p34");
+  });
+
   it("has no comic for chapters without art", () => {
-    assert.equal(getComicChapter(8), null);
+    assert.equal(getComicChapter(9), null);
   });
 });

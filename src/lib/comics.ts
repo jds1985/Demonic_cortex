@@ -95,6 +95,14 @@ const SOURCES: ComicChapterSource[] = [
     coverAlt:
       "Chapter 7 cover. The glossy black Firebird hearse, frosted white and crackling with blue lightning, roars out of a flaming coffin-shaped portal at dusk, its glowing coffin emblem on the nose. Rayne smiles from the passenger seat on the left and Duke grins behind the wheel on the right, his blue eyes glowing under his wide-brim hat. Two trails of fire burn behind them. Title: Chapter Seven, Where We're Going.",
   },
+  {
+    number: 8,
+    heading: "Chapter Eight",
+    name: "Home Fires",
+    pageCount: 34,
+    coverAlt:
+      "Chapter 8 cover. Under a blood-red moon, Duke sits on the steps of an old farmhouse porch, big and muscular in his wide-brim hat and open vest, his blue eyes glowing. Rayne leans against him on the step below, her long silver-grey box braids falling over her coat, one green eye and one blue, a small silver cylinder locket on a chain at her neck. Fireflies drift over the dark farmyard, a barn glows behind them and a lantern burns beside them. Title: Chapter Eight, Home Fires.",
+  },
 ];
 
 function buildChapter(source: ComicChapterSource): ComicChapter {

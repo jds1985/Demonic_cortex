@@ -1,6 +1,6 @@
 export const CHAPTER_COUNT = 13;
 /** Chapters 1 through FREE_THROUGH are free to read. */
-export const FREE_THROUGH = 7;
+export const FREE_THROUGH = 8;
 export const LOCKED_THROUGH = 7;
 
 export type ChapterAccess = "free" | "locked" | "upcoming";
