@@ -79,6 +79,14 @@ const SOURCES: ComicChapterSource[] = [
     coverAlt:
       "Chapter 5 cover. Under the glowing title Demonic Cortex and a full moon, Rayne holds up a small silver locket on a chain while Duke grins behind her, his blue eyes glowing under his wide-brim hat. A ribbon of blue light winds around them through a frame of deadly ingredients: oleander flowers, a golden poison frog, monarch butterflies, a cassowary, scarab beetles, red berries and copper nuggets. An old barn stands in the background. Subtitle: Chapter Five, Key Ingredients.",
   },
+  {
+    number: 6,
+    heading: "Chapter Six",
+    name: "The Scenic Route",
+    pageCount: 35,
+    coverAlt:
+      "Chapter 6 cover. Rayne and Duke ride in the glossy black Firebird hearse, its glowing coffin emblem on the nose, bursting out of a flaming coffin-shaped portal. Rayne sits on the left and Duke grins behind the wheel on the right, his blue eyes glowing under his wide-brim hat. Around them swirl deadly ingredients: oleander flowers, a golden poison frog, a black widow spider, a jellyfish, monarch butterflies and dark berries. Title: Chapter Six, The Scenic Route.",
+  },
 ];
 
 function buildChapter(source: ComicChapterSource): ComicChapter {

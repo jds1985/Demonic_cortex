@@ -85,7 +85,18 @@ describe("comic chapters", () => {
     assert.equal(chapter.leaves[35]?.stem, "p34");
   });
 
+  it("opens chapter 6, The Scenic Route, with 35 pages", () => {
+    const chapter = getComicChapter(6);
+    assert.ok(chapter);
+    assert.equal(chapter.leaves.length, 37);
+    assert.equal(chapter.heading, "Chapter Six");
+    assert.equal(chapter.name, "The Scenic Route");
+    assert.equal(chapter.folder, "/comics/ch06");
+    assert.equal(chapter.leaves[1]?.alt, "Title page. Demonic Cortex. Chapter Six: The Scenic Route.");
+    assert.equal(chapter.leaves[36]?.stem, "p35");
+  });
+
   it("has no comic for chapters without art", () => {
-    assert.equal(getComicChapter(6), null);
+    assert.equal(getComicChapter(7), null);
   });
 });
