@@ -53,7 +53,7 @@ const SOURCES: ComicChapterSource[] = [
     name: "The Book of Lies",
     pageCount: 20,
     coverAlt:
-      "Chapter 2 cover. Under the glowing title Demonic Cortex, Rayne in a black coat and red top holds open a burning book marked with a trident. Smoke shapes of a werewolf, a vampire and a throne of skulls rise behind her, and a sealed envelope floats at her side.",
+      "Chapter 2 cover. Under the glowing title Demonic Cortex, Rayne sits at a desk in a dark guest room lit by a single candle, tears on her cheeks, one green eye and one blue, her long silver-grey box braids gleaming like chains and a small silver cylinder locket with a dark red gem at her neck. She holds up a cream envelope sealed with dark red wax over an open journal filled with sketches of creatures. Behind her, Heaven lies in bed hugging her patched teddy bear, her eyes open and solid black. Candle shadows of chains and grasping hands crawl up the wall.",
   },
   {
     number: 3,
