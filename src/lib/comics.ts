@@ -53,7 +53,7 @@ const SOURCES: ComicChapterSource[] = [
     name: "The Book of Lies",
     pageCount: 20,
     coverAlt:
-      "Chapter 2 cover. Under the glowing title Demonic Cortex, Rayne in a black coat and red top holds open a burning book marked with a trident. Smoke shapes of a werewolf, a vampire and a throne of skulls rise behind her, and a sealed envelope floats at her side. Subtitle: Chapter Two, The Book of Lies.",
+      "Chapter 2 cover. Under the glowing title Demonic Cortex, Rayne in a black coat and red top holds open a burning book marked with a trident. Smoke shapes of a werewolf, a vampire and a throne of skulls rise behind her, and a sealed envelope floats at her side.",
   },
   {
     number: 3,
@@ -61,7 +61,7 @@ const SOURCES: ComicChapterSource[] = [
     name: "Help in the Darkness",
     pageCount: 20,
     coverAlt:
-      "Chapter 3 cover. Under the glowing title Demonic Cortex, Rayne in a long black coat holds Heaven, wrapped in a blanket with her patched teddy bear, in the fog outside a funeral parlor. A tall man in a wide-brim hat stands as a silhouette in the lit doorway, and a glossy black Firebird hearse with a glowing coffin emblem waits beside them. Subtitle: Chapter Three, Help in the Darkness.",
+      "Chapter 3 cover. Under the glowing title Demonic Cortex, Rayne in a long black coat holds Heaven, wrapped in a blanket with her patched teddy bear, in the fog outside a funeral parlor. A tall man in a wide-brim hat stands as a silhouette in the lit doorway, and a glossy black Firebird hearse with a glowing coffin emblem waits beside them.",
   },
   {
     number: 4,
@@ -69,7 +69,7 @@ const SOURCES: ComicChapterSource[] = [
     name: "The Pleasure of Knowing",
     pageCount: 21,
     coverAlt:
-      "Chapter 4 cover. Under the glowing title Demonic Cortex, Duke stands in the rain with his long coat open, his glowing blue eyes under a wide-brim hat and ancient script shimmering across his chest like armor. Rayne leans into him under his arm. Lightning strikes behind an old farmhouse, and the black Firebird hearse with its glowing coffin emblem waits beside them. Subtitle: Chapter Four, The Pleasure of Knowing.",
+      "Chapter 4 cover. Under the glowing title Demonic Cortex, Duke stands in the rain in a black shirt and long black coat, his blue eyes glowing under a plain wide-brim hat. Rayne, her silver-grey box braids gleaming like chains, leans into him under his arm. Lightning strikes behind an old farmhouse, and the black Firebird hearse with its glowing coffin emblem waits beside them.",
   },
   {
     number: 5,
@@ -77,7 +77,7 @@ const SOURCES: ComicChapterSource[] = [
     name: "Key Ingredients",
     pageCount: 34,
     coverAlt:
-      "Chapter 5 cover. Under the glowing title Demonic Cortex and a full moon, Rayne holds up a small silver locket on a chain while Duke grins behind her, his blue eyes glowing under his wide-brim hat. A ribbon of blue light winds around them through a frame of deadly ingredients: oleander flowers, a golden poison frog, monarch butterflies, a cassowary, scarab beetles, red berries and copper nuggets. An old barn stands in the background. Subtitle: Chapter Five, Key Ingredients.",
+      "Chapter 5 cover. Under the glowing title Demonic Cortex and a full moon, Rayne, her silver-grey box braids gleaming like chains, holds up a small silver locket on a chain while Duke grins behind her in a black shirt and coat, his blue eyes glowing under his wide-brim hat. A ribbon of blue light winds around them through a frame of deadly ingredients: oleander flowers, a golden poison frog, monarch butterflies, a cassowary, scarab beetles, red berries and copper nuggets. An old barn stands in the background.",
   },
   {
     number: 6,
@@ -85,7 +85,7 @@ const SOURCES: ComicChapterSource[] = [
     name: "The Scenic Route",
     pageCount: 35,
     coverAlt:
-      "Chapter 6 cover. Rayne and Duke ride in the glossy black Firebird hearse, its glowing coffin emblem on the nose, bursting out of a flaming coffin-shaped portal. Rayne sits on the left and Duke grins behind the wheel on the right, his blue eyes glowing under his wide-brim hat. Around them swirl deadly ingredients: oleander flowers, a golden poison frog, a black widow spider, a jellyfish, monarch butterflies and dark berries. Title: Chapter Six, The Scenic Route.",
+      "Chapter 6 cover. Rayne and Duke ride in the glossy black Firebird hearse, its glowing coffin emblem on the nose, bursting out of a flaming coffin-shaped portal. Rayne sits on the left and Duke grins behind the wheel on the right, his blue eyes glowing under his wide-brim hat. Around them swirl deadly ingredients: oleander flowers, a golden poison frog, a black widow spider, a jellyfish, monarch butterflies and dark berries. Pink oleander blooms line the dark road beneath the car.",
   },
   {
     number: 7,
@@ -93,7 +93,7 @@ const SOURCES: ComicChapterSource[] = [
     name: "Where We're Going",
     pageCount: 35,
     coverAlt:
-      "Chapter 7 cover. The glossy black Firebird hearse, frosted white and crackling with blue lightning, roars out of a flaming coffin-shaped portal at dusk, its glowing coffin emblem on the nose. Rayne smiles from the passenger seat on the left and Duke grins behind the wheel on the right, his blue eyes glowing under his wide-brim hat. Two trails of fire burn behind them. Title: Chapter Seven, Where We're Going.",
+      "Chapter 7 cover. The glossy black Firebird hearse, frosted white and crackling with blue lightning, roars out of a flaming coffin-shaped portal at dusk, its glowing coffin emblem on the nose. Rayne smiles from the passenger seat on the left and Duke grins behind the wheel on the right, his blue eyes glowing under his wide-brim hat. Two trails of fire burn behind them as the car races down a wet country road.",
   },
   {
     number: 8,
@@ -101,7 +101,15 @@ const SOURCES: ComicChapterSource[] = [
     name: "Home Fires",
     pageCount: 34,
     coverAlt:
-      "Chapter 8 cover. Under a blood-red moon, Duke sits on the steps of an old farmhouse porch, big and muscular in his wide-brim hat and open vest, his blue eyes glowing. Rayne leans against him on the step below, her long silver-grey box braids falling over her coat, one green eye and one blue, a small silver cylinder locket on a chain at her neck. Fireflies drift over the dark farmyard, a barn glows behind them and a lantern burns beside them. Title: Chapter Eight, Home Fires.",
+      "Chapter 8 cover. Under a blood-red moon, Duke sits on the steps of an old farmhouse porch, big and muscular in a plain wide-brim hat, black shirt and long black coat, his blue eyes glowing. Rayne leans against him on the step below, her long silver-grey box braids falling over her coat, one green eye and one blue, a small silver cylinder locket on a chain at her neck. Fireflies drift over the dark farmyard, a barn glows behind them and a lantern burns beside them.",
+  },
+  {
+    number: 9,
+    heading: "Chapter Nine",
+    name: "Blood Prices",
+    pageCount: 51,
+    coverAlt:
+      "Chapter 9 cover. Under the glowing title Demonic Cortex, Rayne stands in front with her long silver-grey box braids, one green eye and one blue, a small silver cylinder locket at her neck, holding up a glowing green vial. Duke looms behind her in his wide-brim hat and black coat, his blue eyes glowing. On the left a rainy neon city rises in the dark; on the right glowing orange pentagram sigils burn on the wall of a domed stone chamber. Vials, pills and a syringe lie scattered at the bottom.",
   },
 ];
 

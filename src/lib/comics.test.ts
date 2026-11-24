@@ -118,7 +118,18 @@ describe("comic chapters", () => {
     assert.equal(chapter.leaves[35]?.stem, "p34");
   });
 
+  it("opens chapter 9, Blood Prices, with 51 pages", () => {
+    const chapter = getComicChapter(9);
+    assert.ok(chapter);
+    assert.equal(chapter.leaves.length, 53);
+    assert.equal(chapter.heading, "Chapter Nine");
+    assert.equal(chapter.name, "Blood Prices");
+    assert.equal(chapter.folder, "/comics/ch09");
+    assert.equal(chapter.leaves[1]?.alt, "Title page. Demonic Cortex. Chapter Nine: Blood Prices.");
+    assert.equal(chapter.leaves[52]?.stem, "p51");
+  });
+
   it("has no comic for chapters without art", () => {
-    assert.equal(getComicChapter(9), null);
+    assert.equal(getComicChapter(10), null);
   });
 });
