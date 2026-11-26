@@ -111,6 +111,14 @@ const SOURCES: ComicChapterSource[] = [
     coverAlt:
       "Chapter 9 cover. Under the glowing title Demonic Cortex, Rayne stands in front with her long silver-grey box braids, one green eye and one blue, a small silver cylinder locket at her neck, holding up a glowing green vial. Duke looms behind her in his wide-brim hat and black coat, his blue eyes glowing. On the left a rainy neon city rises in the dark; on the right glowing orange pentagram sigils burn on the wall of a domed stone chamber. Vials, pills and a syringe lie scattered at the bottom.",
   },
+  {
+    number: 10,
+    heading: "Chapter Ten",
+    name: "Six Deadly Souls",
+    pageCount: 47,
+    coverAlt:
+      "Chapter 10 cover. The glowing title Demonic Cortex stands alone on a dark background.",
+  },
 ];
 
 function buildChapter(source: ComicChapterSource): ComicChapter {

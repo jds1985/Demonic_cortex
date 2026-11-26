@@ -129,7 +129,18 @@ describe("comic chapters", () => {
     assert.equal(chapter.leaves[52]?.stem, "p51");
   });
 
+  it("opens chapter 10, Six Deadly Souls, with 47 pages", () => {
+    const chapter = getComicChapter(10);
+    assert.ok(chapter);
+    assert.equal(chapter.leaves.length, 49);
+    assert.equal(chapter.heading, "Chapter Ten");
+    assert.equal(chapter.name, "Six Deadly Souls");
+    assert.equal(chapter.folder, "/comics/ch10");
+    assert.equal(chapter.leaves[1]?.alt, "Title page. Demonic Cortex. Chapter Ten: Six Deadly Souls.");
+    assert.equal(chapter.leaves[48]?.stem, "p47");
+  });
+
   it("has no comic for chapters without art", () => {
-    assert.equal(getComicChapter(10), null);
+    assert.equal(getComicChapter(11), null);
   });
 });

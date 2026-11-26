@@ -45,7 +45,7 @@ describe("private chapter source", () => {
     );
     await writeFile(path.join(directory, "page.png"), TINY_PNG);
     await writeFile(
-      path.join(directory, "chapter-10.json"),
+      path.join(directory, "chapter-11.json"),
       JSON.stringify({
         paragraphs: ["LOCKED_SAMPLE_SHOULD_NOT_LEAK"],
         pages: [{ type: "panel", src: "page.png", alt: "Locked art should not load." }],
@@ -67,11 +67,11 @@ describe("private chapter source", () => {
     assert.equal(asset?.contentType, "image/png");
     assert.equal(asset?.data.byteLength, TINY_PNG.byteLength);
 
-    const locked = await loadChapter(10);
+    const locked = await loadChapter(11);
     assert.equal(locked?.availability, "upcoming");
     assert.equal(locked?.pages, null);
     assert.equal(JSON.stringify(locked).includes("LOCKED_SAMPLE_SHOULD_NOT_LEAK"), false);
-    assert.equal(await getPanelAsset(10, 0), null);
+    assert.equal(await getPanelAsset(11, 0), null);
   });
 
   it("rejects unsafe image sources", () => {
