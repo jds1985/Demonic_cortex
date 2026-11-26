@@ -117,7 +117,7 @@ const SOURCES: ComicChapterSource[] = [
     name: "Six Deadly Souls",
     pageCount: 47,
     coverAlt:
-      "Chapter 10 cover. The glowing title Demonic Cortex stands alone on a dark background.",
+      "Chapter 10 cover. Under the glowing title Demonic Cortex, Rayne stands in a dark coat with her long silver-grey box braids, one green eye and one blue, a small silver cylinder locket at her neck, and dark crow-wing armor on her chest. A crowned crow perches above her head as a murder of crows fills the night sky.",
   },
 ];
 
