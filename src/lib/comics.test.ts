@@ -140,7 +140,18 @@ describe("comic chapters", () => {
     assert.equal(chapter.leaves[48]?.stem, "p47");
   });
 
+  it("opens chapter 11, The Forever Night, with 37 pages", () => {
+    const chapter = getComicChapter(11);
+    assert.ok(chapter);
+    assert.equal(chapter.leaves.length, 39);
+    assert.equal(chapter.heading, "Chapter Eleven");
+    assert.equal(chapter.name, "The Forever Night");
+    assert.equal(chapter.folder, "/comics/ch11");
+    assert.equal(chapter.leaves[1]?.alt, "Title page. Demonic Cortex. Chapter Eleven: The Forever Night.");
+    assert.equal(chapter.leaves[38]?.stem, "p37");
+  });
+
   it("has no comic for chapters without art", () => {
-    assert.equal(getComicChapter(11), null);
+    assert.equal(getComicChapter(12), null);
   });
 });
